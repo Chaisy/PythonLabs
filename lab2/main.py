@@ -1,5 +1,6 @@
-from functions import counting, non_declar, Len_sent, Len_word, Top_n_grams
-
+from functions import counting, non_declar, Len_sent, Len_word, Top_n_grams, ContainersStart
+from  constants import K, PATH
+from container import Container, UsersAndContainers
 with open('text.txt') as file: text = file.read()
 
 print(text)
@@ -17,3 +18,4 @@ print(f"top-K repeated N-grams in the text {Top_n_grams(text)}")
 
 print(f"Task2: ")
 
+ContainersStart()

@@ -75,3 +75,65 @@ def Top_n_grams(text, n=4):
     return sorted(n_grams.items(), key=lambda x: x[1], reverse=True)
 
 
+def ContainersStart():
+    input_str = " "
+    username_conteiners = UsersAndContainers()
+    active_container = Container()
+
+    print("Please enter your name: ")
+    active_user = username_check(input())
+    username_conteiners.add_user(active_user)
+    active_container.load(username_conteiners.find_user(active_user))
+
+    while (input_str != EXIT):
+        input_str = input()
+        opertion = input_str.split()[0]
+        if (len(opertion) + 1 < len(input_str)):
+            text = input_str[len(opertion) + 1::]
+        else:
+            text = " "
+
+        if (opertion == ADD):
+            active_container.add(text)
+        elif (opertion == REMOVE):
+            active_container.remove(text)
+        elif (opertion == FIND):
+            print(active_container.find(text))
+        elif (opertion == LIST):
+            active_container.list()
+        elif (opertion == GREP):
+            print(active_container.grep(text))
+        elif (opertion == HELP_INFO):
+            print(HELP_COMMANDS)
+        elif (opertion == LOAD):
+            active_container.load(PATH + "Containers/" + text + "\'sContainer.txt")
+        elif (opertion == SWITCH):
+            print(f"Enter \'y\' if you want to save changes or \'n\' if you dont want: ")
+            if (save_changes(input())):
+                active_container.save(username_conteiners.find_user(active_user))
+            print(f"Please enter your name: ")
+            active_user = username_check(input())
+            username_conteiners.add_user(active_user)
+            del active_container
+            active_container = Container()
+            active_container.load(username_conteiners.find_user(active_user))
+        elif (opertion == EXIT):
+            print(f"Enter \'y\' if you want to save changes or \'n\' if you dont want: ")
+            if (save_changes(input())):
+                active_container.save(username_conteiners.find_user(active_user))
+        print(f"***\n")
+
+
+def username_check(name: str):
+    while (re.findall(r"[?!#$\"/\\\s]+", name)):
+        print(f"Something happend with input. Please, enter again:")
+        name = input()
+    return name
+
+
+def save_changes(chs: str):
+    while (True):
+        if (chs == YES): return True
+        if (chs == NO):  return False
+        print(f"You wrote something wrong. Try again:")
+        chs = input()
