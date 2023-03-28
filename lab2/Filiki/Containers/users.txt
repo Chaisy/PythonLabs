@@ -1,0 +1,5 @@
+dari /home/dari/PycharmProjects/Lab2IGI/Filiki/Containers/dariContainer.txt
+help /home/dari/PycharmProjects/Lab2IGI/Filiki/Containers/helpContainer.txt
+Dari /home/dari/PycharmProjects/Lab2IGI/Filiki/Containers/Dari'sContainer.txt
+Sonya /home/dari/PycharmProjects/Lab2IGI/Filiki/Containers/Sonya'sContainer.txt
+Kir /home/dari/PycharmProjects/Lab2IGI/Filiki/Containers/Kir'sContainer.txt
