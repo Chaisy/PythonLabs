@@ -3,7 +3,7 @@ from constants import constantes, delete_3_points, delete_random_3_points, doubl
     end_sentenses_sign, start_sentenses, start_sentenses_sign, full_sentenses, full_sentenses_sign, \
     find_sign, find_non_declare, check_numbers, signs, name_check
 from container import Container,UsersAndContainers
-from constants import commands
+from constants import ADD,NO,YES,LIST,LOAD,HELP_COMMANDS,HELP, PATH, EXIT, REMOVE, SWITCH, GREP, FIND
 
 
 def correctText(text):
@@ -64,13 +64,13 @@ def Len_word(text):
 def ngrams_menu(text):
     while True:
         inp = input(f"Do you want enter your personal K and N? Please, enter \"y\" or \"n\": \n")
-
-        if inp != commands.YES and inp != commands.NO:
+        # print(YES)
+        if inp != "y" and inp != "n":
             print("You enter something wrong, try again\n")
-        elif inp == commands.YES:
+        elif inp == "y":
             N = getNumber(input("Enter a number: "))
             K = getNumber(input("Enter a number: "))
-            n_grams_list = Top_n_grams(text, N, K)
+            n_grams_list = Top_n_grams(text, int(N), int(K))
             print(f"top-{K} :  {N}-grams in the text:")
             for n_gram in n_grams_list:
                 print(n_gram)
@@ -78,7 +78,7 @@ def ngrams_menu(text):
         else:
             N = 4
             K = 10
-            n_grams_list = Top_n_grams(text, N, K)
+            n_grams_list = Top_n_grams(text, int(N), int(K))
             print(f"top-{K} repeated {N}-grams in the text:")
             for n_gram in n_grams_list:
                 print(n_gram)
@@ -111,7 +111,7 @@ def ContainersStart():
     username_conteiners.add_user(active_user)
     active_container.load(username_conteiners.find_user(active_user))
 
-    while (input_str != commands.EXIT):
+    while (input_str != EXIT):
         input_str = input()
         opertion = input_str.split()[0]
         if (len(opertion) + 1 < len(input_str)):
@@ -119,21 +119,21 @@ def ContainersStart():
         else:
             text = " "
 
-        if (opertion == commands.ADD):
+        if (opertion == ADD):
             active_container.add(text)
-        elif (opertion == commands.REMOVE):
+        elif (opertion == REMOVE):
             active_container.remove(text)
-        elif (opertion == commands.FIND):
+        elif opertion == FIND:
             print(active_container.find(text))
-        elif (opertion == commands.LIST):
+        elif (opertion == LIST):
             active_container.list()
-        elif (opertion == commands.GREP):
+        elif (opertion == GREP):
             print(active_container.grep(text))
-        elif (opertion == commands.HELP_COMMANDS):
-            print(commands.HELP_COMMANDS)
-        elif (opertion == commands.LOAD):
-            active_container.load(commands.PATH + "Containers/" + text + "\'sContainer.txt")
-        elif (opertion == commands.SWITCH):
+        elif (opertion == HELP):
+            print(HELP_COMMANDS)
+        elif (opertion == LOAD):
+            active_container.load(PATH + "Containers/" + text + "\'sContainer.txt")
+        elif (opertion == SWITCH):
             print(f"Enter \'y\' if you want to save changes or \'n\' if you dont want: ")
             if (save_changes(input())):
                 active_container.save(username_conteiners.find_user(active_user))
@@ -143,7 +143,7 @@ def ContainersStart():
             del active_container
             active_container = Container()
             active_container.load(username_conteiners.find_user(active_user))
-        elif (opertion == commands.EXIT):
+        elif (opertion == EXIT):
             print(f"Enter \'y\' if you want to save changes or \'n\' if you dont want: ")
             if (save_changes(input())):
                 active_container.save(username_conteiners.find_user(active_user))
@@ -159,12 +159,12 @@ def username_check(name: str):
 
 def save_changes(chs: str):
     while (True):
-        if (chs == commands.YES): return True
-        if (chs == commands.NO):  return False
+        if (chs == YES): return True
+        if (chs == NO):  return False
         print(f"You wrote something wrong. Try again:")
         chs = input()
 
 def getNumber (a):
     while True:
-        if a.isdigit() and a>=0 : return a
+        if a.isdigit() and int(a)>=0 : return a
         else: return getNumber(input("You should enter positive number: "))
