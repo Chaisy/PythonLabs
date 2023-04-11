@@ -1,21 +1,12 @@
-from functions import counting, non_declar, Len_sent, Len_word, Top_n_grams, ContainersStart
-from  constants import K, PATH
-from container import Container, UsersAndContainers
-with open('text.txt') as file: text = file.read()
 
-print(text)
-
-print(f"Amount sentenses:  {counting(text)}")
-
-print(f"non declarative:  {non_declar(text)}")
-
-print(f"average length of the sentence in characters (words count only):  {Len_sent(text)}")
-
-print(f"average length of the word in the text in characters:  {Len_word(text)}")
+from mainT1 import mainT1
+from mainT2 import mainT2
 
 
-print(f"top-K repeated N-grams in the text {Top_n_grams(text)}")
+def main():
+    mainT1()
+    mainT2()
 
-print(f"Task2: ")
 
-ContainersStart()
+if __name__ == "__main__":
+    main()
