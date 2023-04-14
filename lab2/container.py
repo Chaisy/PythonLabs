@@ -5,7 +5,11 @@ from constants import PATH
 class Container:
 
     def __init__(self, *args):
-        self.__container = set(args)
+        self.__container = set()
+        try:  # Т.к. некоторые типы даных не хешируемые, то добавление оберрнул в трай кетч
+            self.__container.update(set(args))
+        except Exception:
+            print("Error when adding")
 
     def __str__(self):
         return self.__container.__str__()
@@ -18,13 +22,20 @@ class Container:
         return "We cant find this element((("
 
     def add(self, *args):
-        self.__container.update(set(args))
+        try:
+            self.__container.update(set(args))
+        except Exception:
+            print("Error when adding")
 
     def _add_set(self, my_set: set):
         self.__container.update(my_set)
 
     def remove(self, element):
+        if (element not in self.__container):
+            return
+
         self.__container.remove(element)
+
 
     def grep(self, regex: str):
         result = list()
