@@ -87,16 +87,21 @@ def ngrams_menu(text):
 def Top_n_grams(text, n, k):
 
     text = text.lower()
+
+    text = re.sub(r':', ' ', text)
     words = show_only_words(text)
+    print(words)
     n_grams = dict()
+    print(n_grams)
     # here we get our ngram
     for i in range(len(words) - n + 1):
         ngram = " ".join(words[i: i + n])
         # for situation, if ngram were founded earlier
-        if (i in n_grams):
+        if (ngram in n_grams):
             n_grams[ngram] += 1
         else:
             n_grams[ngram] = 1
+    print(n_grams)
 
     return sorted(n_grams.items(), key=lambda x: x[1], reverse=True)[:k]
 
@@ -109,10 +114,17 @@ def ContainersStart():
     print("Please enter your name: ")
     active_user = username_check(input())
     username_conteiners.add_user(active_user)
-    active_container.load(username_conteiners.find_user(active_user))
+
+    print("Do you want load?")
+    if(save_changes(input())):
+        active_container.load(username_conteiners.find_user(active_user))
+
 
     while (input_str != EXIT):
         input_str = input()
+        if (input_str.isspace() or input_str == ""):
+            print("Incorrect input.Try again: ")
+            continue
         opertion = input_str.split()[0]
         if (len(opertion) + 1 < len(input_str)):
             text = input_str[len(opertion) + 1::]
@@ -147,7 +159,7 @@ def ContainersStart():
             print(f"Enter \'y\' if you want to save changes or \'n\' if you dont want: ")
             if (save_changes(input())):
                 active_container.save(username_conteiners.find_user(active_user))
-        print(f"***\n")
+        print(f"&&&***&&&\n")
 
 
 def username_check(name: str):
@@ -166,5 +178,7 @@ def save_changes(chs: str):
 
 def getNumber (a):
     while True:
-        if a.isdigit() and int(a)>=0 : return a
-        else: return getNumber(input("You should enter positive number: "))
+        if a.isdigit() and int(a)>=0:
+            return a
+        else:
+            return getNumber(input("You should enter positive number: "))
