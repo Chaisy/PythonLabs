@@ -1,5 +1,6 @@
-import canstants
-from my_serializer import my_deserializer, my_serializer
+import DariasSerializer153501.canstants
+from DariasSerializer153501 import canstants
+from DariasSerializer153501.my_serializer import my_deserializer, my_serializer
 import regex
 
 
@@ -35,8 +36,8 @@ class serialiser_JSON:
     def load(self, file):
         return self.loads(file.read())
 
-    def convert_to_expression(self,string):######################
-        string = string.strip()#уберет пробелы на конце и начале
+    def convert_to_expression(self, string):######################
+        string = string.strip() #уберет пробелы на конце и начале
 
         copya = regex.fullmatch(canstants.INT_REGULAR, string)
         if copya:
