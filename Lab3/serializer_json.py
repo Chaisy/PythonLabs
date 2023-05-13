@@ -1,80 +1,93 @@
-import DariasSerializer153501.canstants
-from DariasSerializer153501 import canstants
 from DariasSerializer153501.my_serializer import my_deserializer, my_serializer
 import regex
 
 
-class serialiser_JSON:
-    def dumps(self, objet):
-        return self.convert_t_str(my_serializer(objet))
+class JsonSerializer:
+    INT_P = r"[+-]?\d+"
+    FLOAT_P = r"(?:[+-]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)"
+    BOOL_P = r"((?:true)|(?:false))\b"
+    STR_P = r"\"(?:(?:\\\")|[^\"])*\""
+    NONE_P = r"\b(?:Null)\b"
+    COMPLEX_P = fr"{INT_P}{INT_P}j"
 
-    def dump(self, objet, file):
-        file.write(self.dumps(objet))
+    LIST_RECURSION = r"\[(?R)?(?:,(?R))*\]"
+    VALUE_RECURSION = r"\{(?:(?R):(?R))?(?:,(?R):(?R))*\}"
 
-    def convert_t_str(self, val):
-        if isinstance(val, str):
-            return '"' + val.replace("\\", "\\\\").replace('"', "\"").replace("'", "\'") + '"'
+    VALUE_P = fr"\s*({LIST_RECURSION}|{VALUE_RECURSION}|{STR_P}|{FLOAT_P}|{BOOL_P}|{INT_P}|{NONE_P}|{COMPLEX_P}\s*)"
 
-        elif isinstance(val, (int, float, complex)):
-            return str(val)
+    def dumps(self, obj):
+        obj = my_serializer(obj)
+        return self.check_value(obj)
 
-        elif isinstance(val, bool):
-            if val:
-                return "true"
-            else:
-                return "false"
+    def dump(self, obj, file):
+        file.write(self.dumps(obj))
 
-        elif isinstance(val, list):
-            return "[" + ", ".join([self.convert_t_str(value) for value in val]) + "]"
+    def check_value(self, value):
+        if (isinstance(value, str)):
+            return '"' + value.replace("\\", "\\\\"). \
+                replace('"', "\""). \
+                replace("'", "\'") + '"'
 
-        if isinstance(val, dict):
-            return "{" + ", ".join([f"{self.convert_t_str(key)}: {self.convert_t_str(v)}" for key, v in val.items()]) + "}"
+        elif (isinstance(value, (int, float, complex))):
+            return str(value)
 
-    def loads(self,string):
-        return my_deserializer(self.convert_to_expression(string))
+        elif (isinstance(value, bool)):
+            return "true" if value else "false"
+
+        elif (isinstance(value, list)):
+            return "[" + ", ".join([self.check_value(val) for val in value]) + "]"
+
+        if (isinstance(value, dict)):
+            return "{" + ", ".join([f"{self.check_value(k)}: \
+                                    {self.check_value(v)}" for k, v in value.items()]) + "}"
+
+    def loads(self, string):
+        # print(string, "\n\n")
+        obj = self.find_elem(string)
+        return my_deserializer(obj)
 
     def load(self, file):
         return self.loads(file.read())
 
-    def convert_to_expression(self, string):######################
-        string = string.strip() #уберет пробелы на конце и начале
+    def find_elem(self, string):
+        string = string.strip()
 
-        copya = regex.fullmatch(canstants.INT_REGULAR, string)
-        if copya:
-            return int(copya.group(0))#полное совпадение
+        match = regex.fullmatch(self.INT_P, string)
+        if (match):
+            return int(match.group(0))
 
-        copya = regex.fullmatch(canstants.FLOAT_REGULAR, string)
-        if (copya):
-            return float(copya.group(0))
-
-        copya = regex.fullmatch(canstants.BOOL_REGULAR, string)
-        if copya:
-            return copya.group(0)=="true"
-
-        copya = regex.fullmatch(canstants.STR_REGULAR, string)
-        if copya:
-            res = copya.group(0)
-            res = res.replace("\\\\","\\").\
-                replace(r"\"", '"').\
+        match = regex.fullmatch(self.STR_P, string)
+        if (match):
+            res = match.group(0)
+            res = res.replace("\\\\", "\\"). \
+                replace(r"\"", '"'). \
                 replace(r"\'", "'")
             return res[1:-1]
 
-        copya = regex.fullmatch(canstants.NONE_REGULAR, string)
-        if (copya):
+        match = regex.fullmatch(self.FLOAT_P, string)
+        if (match):
+            return float(match.group(0))
+
+        match = regex.fullmatch(self.BOOL_P, string)
+        if (match):
+            return match.group(0) == "true"
+
+        match = regex.fullmatch(self.NONE_P, string)
+        if (match):
             return None
 
-        if string.startswith("[") and string.endswith("]"):
+        if (string.startswith("[") and string.endswith("]")):
             string = string[1:-1]
-            all_sovpad = regex.findall(canstants.VALUE_REGULAR, string)
-            return [self.convert_to_expression(match[0]) for match in all_sovpad]
+            # print("LIST", string)
+            matches = regex.findall(self.VALUE_P, string)
+            return [self.find_elem(match[0]) for match in matches]
 
         if (string.startswith("{") and string.endswith("}")):
             string = string[1:-1]
-            all_sovpad = regex.findall(canstants.VALUE_REGULAR, string)
-            return {self.convert_to_expression(all_sovpad[i][0]): self.convert_to_expression(all_sovpad[i + 1][0])
-                    for i in range(0, len(all_sovpad), 2)}
-
-
-
-
+            print(string)
+            matches = regex.findall(self.VALUE_P, string)
+            print(len(matches), matches)
+            return {self.find_elem(matches[i][0]):
+                        self.find_elem(matches[i + 1][0])
+                    for i in range(0, len(matches), 2)}
 
