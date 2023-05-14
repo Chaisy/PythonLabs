@@ -1,14 +1,10 @@
-
+from DariasSerializer153501.canstants import ELEMENT_REGULAR, BASE_TYPES, key, val
 from DariasSerializer153501.my_serializer import my_deserializer, my_serializer
 import regex
 
 
 class serialiser_XML:
-    BASE_TYPES = r"str|int|float|bool|NoneType|list|dict"
-    key = "key"
-    val = "value"
-    # именованные группы(для оращения по key и value)
-    ELEMENT_REGULAR = fr"\s*(\<(?P<{key}>{BASE_TYPES})\>(?P<{val}>([^<>]*)|(?R)+)\</(?:{BASE_TYPES})\>)\s*"
+
     def dumps(self, objet):
         print(objet)
         return self.convert_to_str(my_serializer(objet))
@@ -59,7 +55,7 @@ class serialiser_XML:
         string = str(string)
         string = string.strip()
 
-        copia = regex.fullmatch(self.ELEMENT_REGULAR, string)
+        copia = regex.fullmatch(ELEMENT_REGULAR, string)
 
         if not copia:
             return
@@ -86,11 +82,11 @@ class serialiser_XML:
             return None
 
         if key == "list":
-            all_sovpad = regex.findall(self.ELEMENT_REGULAR, value)
+            all_sovpad = regex.findall(ELEMENT_REGULAR, value)
             return [self.convert_to_expression(a[0]) for a in all_sovpad]
 
         if key == "dict":
-            all_sovpad = regex.findall(self.ELEMENT_REGULAR, value)
+            all_sovpad = regex.findall(ELEMENT_REGULAR, value)
             return {self.convert_to_expression(all_sovpad[i][0]):
                         self.convert_to_expression(all_sovpad[i + 1][0]) \
                     for i in range(0, len(all_sovpad), 2)}

@@ -2,7 +2,7 @@ from DariasSerializer153501.serializer_xml import serialiser_XML
 from DariasSerializer153501.serializer_json import serialiser_JSON
 
 
-class Fabric:
+class Serializer_fabric:
 
     @staticmethod
     def create_serializer(format_name: str):

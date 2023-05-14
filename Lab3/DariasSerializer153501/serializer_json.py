@@ -1,19 +1,9 @@
 from DariasSerializer153501.my_serializer import my_deserializer, my_serializer
+from DariasSerializer153501.canstants import INT_REGULAR, BOOL_REGULAR, NONE_REGULAR,  VALUE_REGULAR_EXPR, FLOAT_REGULAR
 import regex
 
 
 class serialiser_JSON:
-    INT_P = r"[+-]?\d+"
-    FLOAT_P = r"(?:[+-]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)"
-    BOOL_P = r"((?:true)|(?:false))\b"
-    STR_P = r"\"(?:(?:\\\")|[^\"])*\""
-    NONE_P = r"\b(?:Null)\b"
-    COMPLEX_P = fr"{INT_P}{INT_P}j"
-
-    LIST_RECURSION = r"\[(?R)?(?:,(?R))*\]"
-    VALUE_RECURSION = r"\{(?:(?R):(?R))?(?:,(?R):(?R))*\}"
-
-    VALUE_P = fr"\s*({LIST_RECURSION}|{VALUE_RECURSION}|{STR_P}|{FLOAT_P}|{BOOL_P}|{INT_P}|{NONE_P}|{COMPLEX_P}\s*)"
 
     def dumps(self, obj):
         obj = my_serializer(obj)
@@ -49,14 +39,15 @@ class serialiser_JSON:
     def load(self, file):
         return self.loads(file.read())
 
+    STR_REGULAR = r"\"(?:(?:\\\")|[^\"])*\""
     def find_elem(self, string):
         string = string.strip()
 
-        match = regex.fullmatch(self.INT_P, string)
+        match = regex.fullmatch(INT_REGULAR, string)
         if (match):
             return int(match.group(0))
 
-        match = regex.fullmatch(self.STR_P, string)
+        match = regex.fullmatch(self.STR_REGULAR, string)
         if (match):
             res = match.group(0)
             res = res.replace("\\\\", "\\"). \
@@ -64,28 +55,28 @@ class serialiser_JSON:
                 replace(r"\'", "'")
             return res[1:-1]
 
-        match = regex.fullmatch(self.FLOAT_P, string)
+        match = regex.fullmatch(FLOAT_REGULAR, string)
         if (match):
             return float(match.group(0))
 
-        match = regex.fullmatch(self.BOOL_P, string)
+        match = regex.fullmatch(BOOL_REGULAR, string)
         if (match):
             return match.group(0) == "true"
 
-        match = regex.fullmatch(self.NONE_P, string)
+        match = regex.fullmatch(NONE_REGULAR, string)
         if (match):
             return None
 
         if (string.startswith("[") and string.endswith("]")):
             string = string[1:-1]
             # print("LIST", string)
-            matches = regex.findall(self.VALUE_P, string)
+            matches = regex.findall(VALUE_REGULAR_EXPR, string)
             return [self.find_elem(match[0]) for match in matches]
 
         if (string.startswith("{") and string.endswith("}")):
             string = string[1:-1]
             print(string)
-            matches = regex.findall(self.VALUE_P, string)
+            matches = regex.findall(VALUE_REGULAR_EXPR, string)
             print(len(matches), matches)
             return {self.find_elem(matches[i][0]):
                         self.find_elem(matches[i + 1][0])
