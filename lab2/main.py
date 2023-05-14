@@ -4,7 +4,7 @@ from mainT2 import mainT2
 
 
 def main():
-    mainT1()
+    # mainT1()
     mainT2()
 
 

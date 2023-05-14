@@ -3,8 +3,7 @@ from constants import constantes, delete_3_points, delete_random_3_points, doubl
     end_sentenses_sign, start_sentenses, start_sentenses_sign, full_sentenses, full_sentenses_sign, \
     find_sign, find_non_declare, check_numbers, signs, name_check
 from container import Container,UsersAndContainers
-from constants import ADD,NO,YES,LIST,LOAD,HELP_COMMANDS,HELP, PATH, EXIT, REMOVE, SWITCH, GREP, FIND
-
+from constants import ADD,NO,YES,LIST,LOAD,HELP_COMMANDS,HELP, PATH, EXIT, REMOVE, SWITCH, GREP, FIND, SAVE
 
 def correctText(text):
 
@@ -132,17 +131,19 @@ def ContainersStart():
             text = " "
 
         if (opertion == ADD):
-            active_container.add(text)
+            active_container.add(*text.split())
         elif (opertion == REMOVE):
             active_container.remove(text)
         elif opertion == FIND:
-            print(active_container.find(text))
+            print(active_container.find(*text.split()))
         elif (opertion == LIST):
             active_container.list()
         elif (opertion == GREP):
             print(active_container.grep(text))
         elif (opertion == HELP):
             print(HELP_COMMANDS)
+        elif(opertion == SAVE):
+            active_container.save(username_conteiners.find_user(active_user))
         elif (opertion == LOAD):
             active_container.load(PATH + "Containers/" + text + "\'sContainer.txt")
         elif (opertion == SWITCH):
@@ -154,12 +155,18 @@ def ContainersStart():
             username_conteiners.add_user(active_user)
             del active_container
             active_container = Container()
-            active_container.load(username_conteiners.find_user(active_user))
+            # active_container.load(username_conteiners.find_user(active_user))
+
+            print("You want load container?")
+            if (save_changes(input())):
+                active_container.load(username_conteiners.find_user(active_user))
+
         elif (opertion == EXIT):
             print(f"Enter \'y\' if you want to save changes or \'n\' if you dont want: ")
             if (save_changes(input())):
                 active_container.save(username_conteiners.find_user(active_user))
         print(f"&&&***&&&\n")
+
 
 
 def username_check(name: str):

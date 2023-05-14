@@ -1,5 +1,6 @@
 from functions import counting, non_declar, Len_sent, Len_word, Top_n_grams, ngrams_menu
 
+
 def mainT1():
     with open('text.txt') as file: text = file.read()
 

@@ -15,6 +15,7 @@ LOAD = "load"
 SWITCH = "switch"
 EXIT = "exit"
 HELP="help"
+SAVE="save"
 YES = "y"
 NO = "n"
 HELP_COMMANDS = "add *smth* :  add new text in container\n\

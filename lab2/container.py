@@ -6,7 +6,7 @@ class Container:
 
     def __init__(self, *args):
         self.__container = set()
-        try:  # Т.к. некоторые типы даных не хешируемые, то добавление оберрнул в трай кетч
+        try:  
             self.__container.update(set(args))
         except Exception:
             print("Error when adding")
