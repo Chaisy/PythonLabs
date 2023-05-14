@@ -1,30 +1,33 @@
 import unittest
-import sys
+import math
 from data_test import my_func, my_decorator, for_dec, A, B,C
 from DariasSerializer153501.serializer_xml import serialiser_XML
+
+
+
 
 class XMLTestCase(unittest.TestCase):
     def setUp(self) -> None:
         self.xml = serialiser_XML()
         
     def test_int(self):
-        ser_obj = self.xml.dumps(12)
-        print("hui\n", ser_obj, "\nhui")
+        ser_obj = self.xml.dumps(112)
+        print("hi\n", ser_obj, "\nhi")
         des_obj = self.xml.loads(ser_obj)
         
-        self.assertEqual(des_obj, 12)
+        self.assertEqual(des_obj, 112)
         
     def test_list(self):
-        ser_obj = self.xml.dumps([1, 2, [3, 5, "blue"], "pup"])
+        ser_obj = self.xml.dumps(["cat", "dog", [1, 2, "fish"], "love"])
         des_obj = self.xml.loads(ser_obj)
         
-        self.assertEqual(des_obj, [1, 2, [3, 5, "blue"], "pup"])
+        self.assertEqual(des_obj, ["cat", "dog", [1, 2, "fish"], "love"])
         
     def test_func(self):
         ser_obj = self.xml.dumps(my_func)
         des_obj = self.xml.loads(ser_obj)
         
-        self.assertEqual(des_obj(5), my_func(5))
+        self.assertEqual(des_obj(50), my_func(50))
         
     def test_decorator(self):
         answ = my_decorator(for_dec)
@@ -59,7 +62,7 @@ class XMLTestCase(unittest.TestCase):
         ser_obj = self.xml.dumps(obj)
         des_obj = self.xml.loads(ser_obj)
         
-        self.assertEqual(obj.biba(12), des_obj.biba(12))
+        self.assertEqual(obj.met(12), des_obj.met(12))
         
     def test_init(self):
         obj = C()
