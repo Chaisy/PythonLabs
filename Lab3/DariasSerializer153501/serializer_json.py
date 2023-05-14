@@ -2,7 +2,7 @@ from DariasSerializer153501.my_serializer import my_deserializer, my_serializer
 import regex
 
 
-class JsonSerializer:
+class serialiser_JSON:
     INT_P = r"[+-]?\d+"
     FLOAT_P = r"(?:[+-]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)"
     BOOL_P = r"((?:true)|(?:false))\b"

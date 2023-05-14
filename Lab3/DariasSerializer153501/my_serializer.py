@@ -150,144 +150,6 @@ def serialize_object(objet):#для чего это пример
     return serial
 
 
-#     serial = dict()
-#     obj_type = type(objet)
-#
-#     def return_basic_type():
-#         return re.search(r"\'(\w+)\'", str(obj_type))[1]#не берем скобки, берем слово
-#
-#     if isinstance(objet,(str, int, bool, float, complex)):
-#         serial["type"] = return_basic_type()
-#         serial["value"] = objet
-#
-#     elif (isinstance(objet,(tuple, list, set, frozenset, bytes, bytearray))):
-#         serial["type"] = return_basic_type()
-#         serial["value"] = [my_serializer(serialised_objet) for serialised_objet in objet]
-#
-#     elif isinstance(objet, dict):
-#         serial["type"] = return_basic_type()
-#         serial["value"] = [my_serializer([key,val]) for (key,val) in objet.items()]
-#
-#     elif inspect.isfunction(objet):
-#         serial["type"] = "function"
-#         serial["value"] = serialize_function(objet)
-#
-#     elif inspect.iscode(objet):
-#         serial["type"] = "code"
-#         arguments = dict()
-#         for key,val in inspect.getmembers(objet):
-#             if key in CODE_ATTRIBUTES : arguments[key]=my_serializer(val)
-#         serial["value"] = arguments
-#     elif isinstance(objet, types.CellType):
-#         serial["type"] = "cell"
-#         serial["value"] = my_serializer(objet.cell_contents)
-#
-#     elif inspect.isclass(objet):
-#         serial["type"] = "class"
-#         serial["value"] = serialize_class(objet)
-#
-#     elif not objet:
-#         serial["type"] = "NoneType"
-#         serial["value"] = "Null"
-#
-#     else:
-#         serial["type"] = "object"
-#         serial["value"] = serialize_object(objet)
-#
-#     return serial
-#
-# def serialize_function(function, clas = None):
-#     if not inspect.isfunction(function):
-#         return
-#
-#     serialize_value_function = dict()
-#
-#     serialize_value_function["__name__"] = function.__name__
-#     serialize_value_function["__globals__"] = return_globals(function, clas)
-#     serialize_value_function["__closure__"] = my_serializer(function.__closure__) if function.__closure__ else my_serializer(tuple())
-#
-#     arguments = dict()
-#
-#     for key,val in inspect.getmembers(function.__code__):
-#         if key in CODE_ATTRIBUTES : arguments[key]=my_serializer(val)
-#
-#     serialize_value_function["__code__"] = arguments
-#
-#     return serialize_value_function
-#
-# def return_globals(function, clas = None):
-#     globs = dict()
-#
-#     for glob_variable in function.__code__.co_names:# проверка на подключаемые модули MAth. sin
-#         if glob_variable in function.__globals__:
-#             if isinstance(function.__globals__[glob_variable], types.ModuleType):
-#                 globs["module "+glob_variable] = my_serializer(function.__globals__[glob_variable].__name__)
-#
-#             elif inspect.isclass(function.__globals__[glob_variable]):#функция с родителем но если использует класс не родительский
-#                 if (clas and function.__globals__[glob_variable]!=clas) or (not clas):
-#                     globs[glob_variable] = my_serializer(function.__globals__[glob_variable])
-#
-#             elif glob_variable!=function.__code__.co_names:#для рекурсии
-#                 globs[glob_variable] = my_serializer(function.__globals__[glob_variable])
-#
-#             else:
-#                 globs[glob_variable] = my_serializer(function.__name__)
-#
-#             return globs
-#
-# def serialize_class(objet):
-#     serial = dict()
-#
-#     serial["__name__"] = my_serializer(objet.__name__)
-#
-#     for mem in objet.__dict__:
-#         member = [mem, objet.__dict__[mem]]#пара ключ значение
-#
-#         if (member[0] in ("__name__", "__base__",
-#                           "__basicsize__", "__dictoffset__", "__class__") or
-#                 type(member[1]) in (
-#                         types.WrapperDescriptorType,
-#                         types.MethodDescriptorType,
-#                         types.BuiltinFunctionType,
-#                         types.GetSetDescriptorType,
-#                         types.MappingProxyType
-#                 )):
-#             continue
-#         if isinstance(objet.__dict__[member[0]], staticmethod):
-#             serial[member[0]] = {"type" : "staticmethod",
-#                               "value" : {"type" : "function",
-#                                          "value": serialize_function(member[1].__func__, objet)}}
-#         elif (isinstance(objet.__dict__[member[0]], classmethod)):
-#             serial[member[0]] = {"type" : "classmethod",
-#                               "value" : {"type" : "function",
-#                                          "value": serialize_function(member[1].__func__, objet)}}
-#         elif (inspect.ismethod(member[1])):
-#             serial[member[0]] = serialize_function(member[1].__func__, objet)
-#
-#         elif inspect.isfunction(member[1]):
-#             serial[member[0]] = {"type" : "function", "value": serialize_function(member[1], objet)}
-#
-#         else:
-#             serial[member[0]] = my_serializer(member[1])
-#
-#     serial["__bases__"] ={"type" : "tuple", "value" :
-#                             [my_serializer(base) for base in objet.__bases__ if base != object]}
-#     return serial
-#
-#
-# def serialize_object(objet):#для чего это пример
-#     serial = dict()
-#     serial["__class__"] = my_serializer(objet.__class__)
-#     members = dict()
-#     for key, val in inspect.getmembers(objet):
-#         if key.startswith("__") or inspect.isfunction(val) or inspect.ismethod(val):
-#             continue
-#         members[key]=my_serializer(val)
-#
-#     serial["__members__"]=members
-#     return serial
-
-
 
 
 def my_deserializer(objet : dict):
@@ -342,7 +204,7 @@ def my_deserializer(objet : dict):
 
 
 
-def return_type(_type, objet):#почеу не нравится последняя
+def return_type(_type, objet):
     if (_type == "int"):
         return int(objet)
     elif (_type == "float"):
@@ -368,7 +230,7 @@ def return_collection(_type, objet):
     elif _type == "bytes":
         return bytes(my_deserializer(o) for o in objet)
 
-def deserialize_function(objet):##########################
+def deserialize_function(objet):
     code = objet["__code__"]
     globs = objet["__globals__"]
     closures = objet["__closure__"]
@@ -407,7 +269,7 @@ def deserialize_function(objet):##########################
 
     return funcRes
 
-def deserialize_class(objet):# почему не нравится 266
+def deserialize_class(objet):
 
     bases = my_deserializer(objet["__bases__"])
     members = dict()

@@ -1,5 +1,4 @@
-# import DariasSerializer153501.canstants
-# from DariasSerializer153501 import canstants
+
 from DariasSerializer153501.my_serializer import my_deserializer, my_serializer
 import regex
 
