@@ -75,9 +75,9 @@ class serialiser_JSON:
 
         if (string.startswith("{") and string.endswith("}")):
             string = string[1:-1]
-            print(string)
+            # print(string)
             matches = regex.findall(VALUE_REGULAR_EXPR, string)
-            print(len(matches), matches)
+            # print(len(matches), matches)
             return {self.find_elem(matches[i][0]):
                         self.find_elem(matches[i + 1][0])
                     for i in range(0, len(matches), 2)}

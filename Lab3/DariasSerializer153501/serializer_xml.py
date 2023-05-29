@@ -6,7 +6,7 @@ import regex
 class serialiser_XML:
 
     def dumps(self, objet):
-        print(objet)
+        # print(objet)
         return self.convert_to_str(my_serializer(objet))
 
     def dump(self, objet, file):
@@ -51,7 +51,7 @@ class serialiser_XML:
             replace("&gt;", ">").replace("&quot;", '"').replace("&apos;", "'")
 
     def convert_to_expression(self, string):
-        print(string)
+        # print(string)
         string = str(string)
         string = string.strip()
 

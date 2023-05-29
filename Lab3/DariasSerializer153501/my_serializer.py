@@ -10,7 +10,7 @@ def my_serializer(objet):
     obj_type = type(objet)
 
     def return_basic_type():
-        return re.search(r"\'(\w+)\'", str(obj_type))[1]#не берем скобки, берем слово
+        return re.search(r"\'(\w+)\'", str(obj_type))[1]
 
     if isinstance(objet,(str, int, bool, float, complex)):
         serial["type"] = return_basic_type()
@@ -45,6 +45,10 @@ def my_serializer(objet):
     elif not objet:
         serial["type"] = "NoneType"
         serial["value"] = "Null"
+
+    elif isinstance(objet, property):
+        serial["type"] = "property"
+        serial["value"] = serialize_property(objet)
 
     else:
         serial["type"] = "object"
@@ -136,7 +140,21 @@ def serialize_class(objet):
                             [my_serializer(base) for base in objet.__bases__ if base != object]}
     return serial
 
-
+def serialize_property(objet):
+    val = dict()
+    val["fget"] = my_serializer(objet.fget)
+    val["fset"] = my_serializer(objet.fset)
+    val["fdel"] = my_serializer(objet.fdel)
+    return val
+# def serialize_check_prop(objet):
+#     srz = dict()
+#     if isinstance(objet, property):
+#         srz["type"] = "property"
+#         srz["value"] = serialize_property(objet)
+#     else:
+#         srz["type"] = "object"
+#         srz["value"] = serialize_object(objet)
+#     return srz
 def serialize_object(objet):#для чего это пример
     serial = dict()
     serial["__class__"] = my_serializer(objet.__class__)
@@ -153,7 +171,7 @@ def serialize_object(objet):#для чего это пример
 
 
 def my_deserializer(objet : dict):
-    print(objet, type(objet))
+    # print(objet, type(objet))
     if objet["type"] in DEFAULT_TYPES:
         return return_type(objet["type"], objet["value"])
 
@@ -263,6 +281,8 @@ def deserialize_function(objet):
                               # my_deserializer(code["co_exeptiontable"]),
                               my_deserializer(code["co_freevars"]),
                               my_deserializer(code["co_cellvars"]))
+
+    res_globs["__builtins__"] = __import__("builtins")
 
     funcRes = types.FunctionType(code=codeType, globals=res_globs, closure=closure)
     funcRes.__globals__.update({funcRes.__name__: funcRes})
