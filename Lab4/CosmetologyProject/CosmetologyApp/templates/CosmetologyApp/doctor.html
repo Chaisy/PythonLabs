@@ -1,0 +1,18 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block content %}
+<h1>Doctor List</h1>
+{% if doctor_list %}
+<ul>
+
+    {% for doctor in doctor_list %}
+    <li>
+        Name: {{ doctor.name }} Phone: {{ doctor.number }}
+    </li>
+    {% endfor %}
+
+</ul>
+{% else %}
+    <p>There are no doctors in the salon</p>
+{% endif %}
+{% endblock %}

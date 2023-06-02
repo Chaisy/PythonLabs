@@ -1,0 +1,12 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+<h1>Doctor Details</h1>
+
+{% block content %}
+    <ul>
+        <li>Id: {{ doctor_details.id }}</li>
+        <li>Name: {{ doctor_details.name }}</li>
+        <li>Phone: {{ doctor_details.number }}</li>
+        <li>Category: {{ doctor_details.category }}</li>
+    </ul>
+{% endblock %}

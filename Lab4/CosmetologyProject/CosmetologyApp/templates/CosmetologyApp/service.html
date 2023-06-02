@@ -2,10 +2,10 @@
 
 {% block content %}
 <h1>All services for you</h1>
-{% if object_list %}
+{% if service_list %}
 <ul>
 
-    {% for service in object_list %}
+    {% for service in service_list %}
     <li>
         Service: {{ service.procedure }} Price: {{ service.price }}
     </li>
