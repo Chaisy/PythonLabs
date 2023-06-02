@@ -27,3 +27,16 @@ def about(request):
             'content' : "Example app page for Django."
         }
     )
+
+def service(request):
+    return render(
+        request,
+        "CosmetologyApp/service.html",
+        {
+            'title': "About HelloDjangoApp",
+            'content': "Example app page for Django."
+        }
+    )
+
+def placements(request):
+    return HttpResponse("PLACEMENTS")

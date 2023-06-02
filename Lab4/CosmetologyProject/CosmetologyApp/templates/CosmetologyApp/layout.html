@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-   <meta charset="utf-8" />
+    <meta charset="utf-8" />
     <title>{{ title }}</title>
+    <title>Cosmetology</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'site.css' %}" />
 </head>
@@ -10,14 +11,14 @@
     <div class="navbar">
         <a href="/" class="navbar-brand">Hello Django</a>
         <a href="{% url 'home' %}" class="navbar-item">Home</a>
-        <a href="{% url 'about' %}" class="navbar-item">About</a>
+        <a href="{% url 'service' %}" class="navbar-item">Service</a>
     </div>
-
-       <div class="body-content">
+    <div class="body-content">
         {% block content %}{% endblock %}
         <hr />
         <footer>
-            <p>&copy; 2018</p>
+            <p>&copy; 2023</p>
+            {{ content }}
         </footer>
     </div>
 </body>

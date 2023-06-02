@@ -1,0 +1,18 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block content %}
+<h1>All services for you</h1>
+{% if object_list %}
+<ul>
+
+    {% for service in object_list %}
+    <li>
+        Service: {{ service.procedure }} Price: {{ service.price }}
+    </li>
+    {% endfor %}
+
+</ul>
+{% else %}
+    <p>There are no services in the salon</p>
+{% endif %}
+{% endblock %}
