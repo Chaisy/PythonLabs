@@ -33,7 +33,8 @@ class Doctor(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     name = models.CharField(max_length=20)
     number = models.CharField(max_length=20, validators=[num_validetor], default='+375 (29) xxx-xx-xx')
-    category = models.ForeignKey(Doctor_Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='category')
+    category = models.ForeignKey(Doctor_Category, on_delete=models.SET_NULL, null=True, blank=True,
+                                 related_name='doctor_category')
 
 
     class Meta:
@@ -64,7 +65,8 @@ class Client(models.Model):
     number = models.CharField(max_length=20, validators=[num_validetor], default='+375 (29) xxx-xx-xx')
     birth_date = models.DateField(null=True, blank=True)
     adress = models.CharField(max_length=100, validators=[adress_validator], default='Gikalo, 9')
-    service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True, blank=True, related_name='servise')
+    service = models.ManyToManyField(Service,   blank=True, related_name='servise_for_client')
+    doctor = models.ManyToManyField(Doctor,  blank=True, related_name='doctor_for_client')
 
     class Meta:
         verbose_name = "Client"
@@ -75,14 +77,14 @@ class Client(models.Model):
 
 class Shedule(models.Model):
 
-    category = models.ForeignKey(Doctor_Category, on_delete=models.SET_NULL, null=True, blank=True,
-                                 related_name='category')
+    service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True, blank=True,
+                                 related_name='service_in_shedule')
     doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True, blank=True,
-                                 related_name='doctor')
+                                 related_name='doctor_in_shedule')
     client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True, blank=True,
-                                 related_name='client')
+                                 related_name='client_in_shedule')
     room = models.ForeignKey(Room, on_delete=models.SET_NULL, null=True, blank=True,
-                               related_name='room')
+                               related_name='room_in_shedule')
     date = models.DateField(null=True, blank=True)
 
     class Meta:
@@ -91,13 +93,13 @@ class Shedule(models.Model):
 
     def __str__(self) -> str:
         return "\nDoctor: " + str(self.doctor) + "\nClient: " + str(self.client) \
-            + "\n Category: " + str(self.category)+ "\nRoom: " + str(self.room) + "\nDate: " + str(self.date)
+            + "\n Service: " + str(self.service) + "\nRoom: " + str(self.room) + "\nDate: " + str(self.date)
 
 
 
 
 class Sale(models.Model):
-    service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True, blank=True, related_name='servise')
+    service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True, blank=True, related_name='sale_servise')
     count = models.IntegerField()
 
     class Meta:
