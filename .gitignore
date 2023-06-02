@@ -1,5 +1,5 @@
 venv
 .idea
 __pycatche__
- CosmetologyApp/__pycache__/
-CosmetologyProject/__pycache__
+Lab4/CosmetologyProject/CosmetologyProject/__pycache__
+Lab4/CosmetologyProject/CosmetologyApp/__pycache__
