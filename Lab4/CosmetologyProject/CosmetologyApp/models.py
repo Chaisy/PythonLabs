@@ -31,8 +31,8 @@ class Doctor(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     name = models.CharField(max_length=20)
     number = models.CharField(max_length=20, validators=[num_validetor], default='+375 (29) xxx-xx-xx')
-    category = models.ForeignKey(Doctor_Category, on_delete=models.SET_NULL, null=True, blank=True,
-                                 related_name='doctor_category')
+    # category = models.ForeignKey(Doctor_Category, on_delete=models.SET_NULL, null=True, blank=True,
+    #                              related_name='doctor_category')
 
 
     class Meta:
@@ -59,8 +59,6 @@ class Client(models.Model):
     name = models.CharField(max_length=20)
     number = models.CharField(max_length=20, validators=[num_validetor], default='+375 (29) xxx-xx-xx')
     birth_date = models.DateField(null=True, blank=True)
-    service = models.ManyToManyField(Service,   blank=True, related_name='servise_for_client')
-    doctor = models.ManyToManyField(Doctor,  blank=True, related_name='doctor_for_client')
 
     class Meta:
         ordering = ['name', 'number']

@@ -4,18 +4,22 @@
 }
 
 .navbar {
-    background-color: lightslategray;
-    font-size: 1em;
+    background-color: #9887ed;
+    font-size: 20px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: white;
-    padding: 8px 5px 8px 5px;
+    padding: 20px 5px 8px 5px;
+    height: 50px;
+
 }
 
-    .navbar a {
-        text-decoration: none;
-        color: inherit;
-    }
-
+.navbar a {
+    text-decoration: none;
+    color: inherit;
+}
+.name{
+    text-align: center;
+}
 .navbar-brand {
     font-size: 1.2em;
     font-weight: 600;
@@ -29,4 +33,23 @@
 .body-content {
     padding: 5px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+table {
+    margin: auto;
+   border: 3px solid #8374d3;
+   width: 1400px;
+   font-size: 20px;
+}
+/* границы ячеек первого ряда таблицы */
+th {
+   border: 1px solid #8374d3;
+   background-color: #9887ed ;
+   text-align: center;
+
+}
+/* границы ячеек тела таблицы */
+td {
+   border: 1px solid #8374d3;
+    text-align: center;
 }

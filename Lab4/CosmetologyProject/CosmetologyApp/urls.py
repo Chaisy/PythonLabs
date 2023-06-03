@@ -1,5 +1,5 @@
-
-from django.urls import path
+from django.contrib import admin
+from django.urls import path, include
 from django.urls import re_path
 
 from . import views
@@ -7,25 +7,19 @@ from . import views
 
 urlpatterns = [
 
-    path('', views.index),
-    re_path(r'^$', views.index, name='index'),
-    re_path(r'^home$', views.index, name='home'),
-    # re_path(r'^service$', views.service, name='service'),
-    path(r'^service$', views.ServiceListView.as_view(), name='service'),
-    path(r'^shedule$', views.SheduleListView.as_view(), name='shedule'),
-    path(r'^client$', views.ClientListView.as_view(), name='client'),
+    path('', views.HomeView.as_view(), name='home'),
+    path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
+    re_path(r'^registration/$', views.UserRegistration, name='registration'),
+    re_path('personal/', views.UserProfileView.as_view(), name='user'),
+    path('service/', views.ServiceListView.as_view(), name='service'),
+    path('shedule/', views.SheduleListView.as_view(), name='shedule'),
+    path('client/', views.ClientListView.as_view(), name='client'),
+    re_path(r'^personal/$', views.UserProfileView.as_view(), name='user'),
     path(r'^doctor$', views.DoctorListView.as_view(), name='doctor'),
-    # url(r'^client/(?P<pk>\d+)$', views.ClientDetailView.as_view(), name='client-detail'),
     path(r'client/(?P<pk>\d+)$', views.ClientDetailView.as_view(), name='client-detail'),
     path(r'doctor/(?P<pk>\d+)$', views.DoctorDetailView.as_view(), name='doctor-detail'),
-    # path('', views.index)
-    # re_path(r'^$', views.index, name='index'),
-    # re_path(r'^animals/$', views.animals, name='animals'),
-    # re_path(r'^placements/$', views.placements, name='placements'),
+
 
 ]
 
-# urlpatterns = [
-    # re_path(r'^$', CosmetologyApp.views.index, name='index'),
-    # re_path(r'^home$', CosmetologyApp.views.index, name='home'),
-    # re_path(r'^about$', CosmetologyApp.views.about, name='about'),

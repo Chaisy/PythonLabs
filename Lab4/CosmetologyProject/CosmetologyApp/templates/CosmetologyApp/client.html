@@ -1,17 +1,16 @@
 {% extends "CosmetologyApp/layout.html" %}
 
 {% block content %}
-<h1>Client list</h1>
+<h1 class="name">Clients</h1>
 {% if client_list %}
-<ul>
+<table>
+<tr><th>Name:</th><th>Phone:</th></tr>
 
     {% for client in client_list %}
-    <li>
-        Name: {{ client.name }} Phone: {{ client.number }}
-    </li>
+    <tr><td> {{ client.name }}</td><td>{{ client.number }}</td></tr>
     {% endfor %}
 
-</ul>
+</table>
 {% else %}
     <p>There are no client in the salon</p>
 {% endif %}

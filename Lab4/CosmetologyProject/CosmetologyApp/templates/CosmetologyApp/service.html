@@ -1,17 +1,16 @@
 {% extends "CosmetologyApp/layout.html" %}
 
 {% block content %}
-<h1>All services for you</h1>
+<h1 class="name">Services</h1>
 {% if service_list %}
-<ul>
+<table>
+<tr><th>Service:</th><th>Price:</th></tr> <!--ряд с ячейками заголовков-->
 
     {% for service in service_list %}
-    <li>
-        Service: {{ service.procedure }} Price: {{ service.price }}
-    </li>
+    <tr><td> {{ service.procedure }}</td><td>{{ service.price }}</td></tr>
     {% endfor %}
 
-</ul>
+</table>
 {% else %}
     <p>There are no services in the salon</p>
 {% endif %}

@@ -1,37 +1,119 @@
+import logging
+
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.sites import requests
+from django.core.validators import RegexValidator
+from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 from django.shortcuts import render
 
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from datetime import datetime
 
 from django.views import generic, View
+import requests
+from .models import Service, Client, Doctor, Shedule, Doctor_Category
 
-from .models import Service, Client, Doctor, Shedule
+logger = logging.getLogger(__name__)
+class HomeView(View):
+    @staticmethod
+    def get(request):
+
+        response = requests.get('https://dog.ceo/api/breeds/image/random')
+        image_url = response.json()['message']
+
+        response = requests.get('https://www.boredapi.com/api/activity')
+        act = response.json()['activity']
+
+        context = {
+            'image_url': image_url,
+            'activity': act
+        }
+
+        return render(request, 'CosmetologyApp/index.html', context)
 
 
-def index(request):
-    now = datetime.now()
+
+class UserProfileView(View):
+    @staticmethod
+    def get(request):
+        try:
+            doctor = Doctor.objects.get(username=request.user.username)
+            # phone = Doctor.object.get(number=request.user.number)
+        except Doctor.DoesNotExist:
+            raise Http404('Client not found')
+
+        return render(
+            request,
+            'CosmetologyApp/personal.html',
+            context={'doctor' : doctor, })
+
+
+
+
+class DoctortForm(forms.Form):
+
+    # name = forms.CharField(max_length=20, min_length=2, validators=[validate_name])
+    # number = forms.CharField(max_length=20, validators=[RegexValidator(regex=r"^\+375 \(29\) \d{3}-\d{2}-\d{2}$")],
+    #                          help_text="+375 (29) xxx-xx-xx")
+    # category = forms.ForeignKey(Doctor_Category, related_name='doctor_category')
+
+    # if Doctor.objects.filter(number=number).exists():
+    #     raise forms.ValidationError('number is already taken', params={'value' : number})
+    # password = forms.CharField(widget=forms.PasswordInput())
+
+    num_validetor = RegexValidator(regex=r"^\+375 \(29\) \d{3}-\d{2}-\d{2}$")
+    # validate_name = RegexValidator(regex=r"/^[a-z ,.'-]+$/i")
+    name = forms.CharField(max_length=20)
+    number = forms.CharField(max_length=30, validators=[num_validetor], help_text="+375 (29) xxx-xx-xx")
+    password = forms.CharField()
+
+
+
+def UserRegistration(request):
+    if request.method == "POST":
+        doctorForm = DoctortForm(request.POST)
+        if doctorForm.is_valid():
+            # doctor = Doctor()
+            # doctor.name = doctorForm.cleaned_data['name']
+            # doctor.password = make_password(doctorForm.cleaned_data['password'])
+            # doctor.number = doctorForm.cleaned_data['number']
+            # doctor.save()
+            # request.doctor = doctor
+            # doctor = Doctor()
+            # doctor.name = doctor.username
+            # doctor.username = doctor.username
+            # doctor.number = doctor.number
+            # # doctor.category =
+            # doctor.save()
+            # logger.info(f'Registration new user {doctor.id}: {doctor.name}')
+            user = User()
+            user.username = doctorForm.cleaned_data['name']
+            user.password = make_password(doctorForm.cleaned_data['password'])
+            user.save()
+            request.user = user
+            doctor = Doctor()
+            doctor.name = user.username
+            doctor.number = doctorForm.cleaned_data['number']
+            doctor.save()
+            logger.info(f'Registration new user {doctor.id}: {doctor.name}')
+            return HttpResponseRedirect('/CosmetologyApp/accounts/login/')
+        else:
+            logger.error('Failed to registration user')
+    else:
+        doctorForm = DoctortForm()
 
     return render(
-        request,
-        "CosmetologyApp/index.html",  # Relative path from the 'templates' folder to the template file
-        # "index.html", # Use this code for VS 2017 15.7 and earlier
-        {
-            'title' : "Hello Django",
-            'message' : "Hello Django!",
-            'content' : " on " + now.strftime("%A, %d %B, %Y at %X")
-        }
-    )
+            request,
+            'CosmetologyApp/registration.html',
+            context={'form' : doctorForm, })
 
-def about(request):
-    return render(
-        request,
-        "CosmetologyApp/about.html",
-        {
-            'title' : "About HelloDjangoApp",
-            'content' : "Example app page for Django."
-        }
-    )
+
+
+
 
 class ServiceListView(generic.ListView):
     model = Service

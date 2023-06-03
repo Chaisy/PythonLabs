@@ -9,9 +9,22 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="/" class="navbar-brand">Hello Django</a>
-        <a href="{% url 'home' %}" class="navbar-item">Home</a>
-        <a href="{% url 'service' %}" class="navbar-item">Service</a>
+        <a href="/" class="navbar-brand">Cosmetology Salon</a>
+        <a href="/CosmetologyApp/" class="navbar-item">Home</a>
+        <a href="/CosmetologyApp/service" class="navbar-item">Service</a>
+        {% if user.is_authenticated %}
+        {% if user.is_superuser %}
+        <a href="" class="navbar-item">Statistic</a>
+        {%endif%}
+        <h class="navbar-item" ><font color="black">User: {{ user.get_username }}</font></h>
+<!--        <h class="navbar-item">Phone: {{ doctor.get_number }}</h>-->
+        <a href="/CosmetologyApp/shedule" class="navbar-item">Shedule</a>
+        <a href="/CosmetologyApp/client" class="navbar-item">Clients</a>
+        <a href="/CosmetologyApp/accounts/logout/" class="navbar-item">Logout</a>
+        {% else %}
+        <a href="/CosmetologyApp/accounts/login/" class="navbar-item">Login</a>
+        {% endif %}
+
     </div>
     <div class="body-content">
         {% block content %}{% endblock %}

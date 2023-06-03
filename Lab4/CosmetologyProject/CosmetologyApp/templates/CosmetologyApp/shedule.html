@@ -1,18 +1,19 @@
 {% extends "CosmetologyApp/layout.html" %}
 
 {% block content %}
-<h1>All services for you</h1>
+<h1 class="name">Shedule</h1>
 {% if shedule_list %}
-<ul>
+<table>
+<tr><th>Doctor:</th><th>Client:</th><th>Service:</th><th>Room:</th><th>Date:</th></tr>
 
     {% for shedule in shedule_list %}
-    <li>
-        Doctor: {{ shedule.doctor }} Client: {{ shedule.client }} Service:
-      {{ shedule.service }} Room: {{ shedule.room }} Date: {{ shedule.date }}
-    </li>
+    <tr><td> {{ shedule.doctor }}</td><td>{{ shedule.client }}</td>
+        <td>{{ shedule.service }}</td><td>{{ shedule.service }}</td>
+        <td>{{ shedule.date }}</td>
+    </tr>
     {% endfor %}
 
-</ul>
+</table>
 {% else %}
     <p>There are no shedule in the salon</p>
 {% endif %}
