@@ -13,8 +13,11 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from datetime import datetime
 
+from django.urls import reverse_lazy
 from django.views import generic, View
 import requests
+from django.views.generic import CreateView, UpdateView, DeleteView
+
 from .models import Service, Client, Doctor, Shedule, Doctor_Category
 
 logger = logging.getLogger(__name__)
@@ -53,18 +56,37 @@ class UserProfileView(View):
 
 
 
+class SheduleCreate(CreateView):
+
+    model = Shedule
+    fields = ['doctor', 'client', 'service', 'room', 'date']
+    success_url = reverse_lazy('shedule')
+
+
+
+
+class SheduleUpdate(UpdateView):
+    model = Shedule
+    fields = ['doctor', 'client', 'service', 'room', 'date']
+    success_url = reverse_lazy('shedule')
+
+class SheduleDetailsView(View):
+    @staticmethod
+    def get(request, id):
+        try:
+            shedule = Shedule.objects.get(id=id)
+        except Shedule.DoesNotExist:
+            raise Http404("Animal doesn't exist :(")
+        return render(
+            request,
+            'CosmetologyApp/shedule_detail.html',
+            context={'shedule': shedule, }
+        )
+class SheduleDelete(DeleteView):
+    model = Shedule
+    success_url = reverse_lazy('shedule')
 
 class DoctortForm(forms.Form):
-
-    # name = forms.CharField(max_length=20, min_length=2, validators=[validate_name])
-    # number = forms.CharField(max_length=20, validators=[RegexValidator(regex=r"^\+375 \(29\) \d{3}-\d{2}-\d{2}$")],
-    #                          help_text="+375 (29) xxx-xx-xx")
-    # category = forms.ForeignKey(Doctor_Category, related_name='doctor_category')
-
-    # if Doctor.objects.filter(number=number).exists():
-    #     raise forms.ValidationError('number is already taken', params={'value' : number})
-    # password = forms.CharField(widget=forms.PasswordInput())
-
     num_validetor = RegexValidator(regex=r"^\+375 \(29\) \d{3}-\d{2}-\d{2}$")
     # validate_name = RegexValidator(regex=r"/^[a-z ,.'-]+$/i")
     name = forms.CharField(max_length=20)
@@ -77,19 +99,6 @@ def UserRegistration(request):
     if request.method == "POST":
         doctorForm = DoctortForm(request.POST)
         if doctorForm.is_valid():
-            # doctor = Doctor()
-            # doctor.name = doctorForm.cleaned_data['name']
-            # doctor.password = make_password(doctorForm.cleaned_data['password'])
-            # doctor.number = doctorForm.cleaned_data['number']
-            # doctor.save()
-            # request.doctor = doctor
-            # doctor = Doctor()
-            # doctor.name = doctor.username
-            # doctor.username = doctor.username
-            # doctor.number = doctor.number
-            # # doctor.category =
-            # doctor.save()
-            # logger.info(f'Registration new user {doctor.id}: {doctor.name}')
             user = User()
             user.username = doctorForm.cleaned_data['name']
             user.password = make_password(doctorForm.cleaned_data['password'])

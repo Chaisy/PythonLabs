@@ -1,0 +1,14 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block title %}Edit/add shedule{% endblock %}
+
+{% block content %}
+  <h1>Edit/add shedule</h1>
+  <form action="" method="post">
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}
+    </table>
+    <input type="submit" value="Submit" />
+  </form>
+{% endblock %}

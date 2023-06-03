@@ -1,0 +1,17 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block title %}Shedule Details{% endblock %}
+{% block content %}
+    <ul>
+        <li>Doctor: {{ shedule.doctor }}</li>
+        <li>Client: {{ shedule.client }}</li>
+        <li>Service: {{ shedule.service }}</li>
+        <li>Room: {{ shedule.room }}</li>
+        <li>Date: {{ shedule.date }}</li>
+    </ul>
+    {% if user.is_superuser %}
+            <p><a href="/CosmetologyApp/shedule/{{ shedule.id }}/edit/">Edit</a></p>
+            <p><a href="/CosmetologyApp/shedule/{{ shedule.id }}/delete/">Delete</a></p>
+    {% endif %}
+
+{% endblock %}

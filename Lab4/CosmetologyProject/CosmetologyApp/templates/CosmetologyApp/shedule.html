@@ -2,12 +2,14 @@
 
 {% block content %}
 <h1 class="name">Shedule</h1>
+
 {% if shedule_list %}
 <table>
 <tr><th>Doctor:</th><th>Client:</th><th>Service:</th><th>Room:</th><th>Date:</th></tr>
 
     {% for shedule in shedule_list %}
-    <tr><td> {{ shedule.doctor }}</td><td>{{ shedule.client }}</td>
+
+    <tr><td><a href="/CosmetologyApp/shedule/{{ shedule.id }}"> {{ shedule.doctor }}</a></td><td>{{ shedule.client }}</td>
         <td>{{ shedule.service }}</td><td>{{ shedule.service }}</td>
         <td>{{ shedule.date }}</td>
     </tr>
@@ -16,5 +18,8 @@
 </table>
 {% else %}
     <p>There are no shedule in the salon</p>
+{% endif %}
+{% if user.is_superuser %}
+    <p><a href="/CosmetologyApp/shedule/add/">Add</a></p>
 {% endif %}
 {% endblock %}
