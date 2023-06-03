@@ -1,10 +1,10 @@
 from django.db import models
-
+import datetime
 import re
 import uuid
 from wsgiref.validate import validator
 from django.db import models
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MaxValueValidator, MinValueValidator
 
 
 class Doctor_Category(models.Model):
@@ -69,24 +69,22 @@ class Client(models.Model):
         return "\nName: " + str(self.name) + "\nPhone" + str(self.number)
 
 class Shedule(models.Model):
-
-    service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True, blank=True,
-                                 related_name='service_in_shedule')
     doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True, blank=True,
                                  related_name='doctor_in_shedule')
     client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True, blank=True,
                                  related_name='client_in_shedule')
-    room = models.ForeignKey(Room, on_delete=models.SET_NULL, null=True, blank=True,
-                               related_name='room_in_shedule')
-    date = models.DateField(null=True, blank=True)
+    service = models.ForeignKey(Service, on_delete=models.SET_NULL, related_name='shedule_service', null=True, blank=True,
+                                )
+    room = models.IntegerField(validators=[MaxValueValidator(20), MinValueValidator(1)])
+    date = models.DateField(null=True,blank=False)
+
 
     class Meta:
         verbose_name = "Shedule"
         verbose_name_plural = "Shedules"
 
     def __str__(self) -> str:
-        return "\nDoctor: " + str(self.doctor) + "\nClient: " + str(self.client) \
-            + "\n Service: " + str(self.service) + "\nRoom: " + str(self.room) + "\nDate: " + str(self.date)
+        return f'{self.doctor} {self.client}{self.service} {self.room}{self.date}'
 
 class Sale(models.Model):
     service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True, blank=True, related_name='sale_servise')
