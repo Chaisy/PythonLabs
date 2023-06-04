@@ -1,12 +1,15 @@
 {% extends "CosmetologyApp/layout.html" %}
 
-<h1>Client Details</h1>
-
+{% block title %}Client Details{% endblock %}
 {% block content %}
     <ul>
-        <li>Id: {{ client_details.id }}</li>
-        <li>Name: {{ client_details.name }}</li>
-        <li>Phone: {{ client_details.number }}</li>
-        <li>Birth Date: {{ client_details.birth_date }}</li>
+        <li>Name: {{ client.name }}</li>
+        <li>Phone: {{ client.number }}</li>
+        <li>Birth_date: {{ client.birth_date }}</li>
     </ul>
+    {% if user.is_superuser %}
+            <p><a href="/CosmetologyApp/client/{{ client.id }}/edit/">Edit</a></p>
+            <p><a href="/CosmetologyApp/client/{{ client.id }}/delete/">Delete</a></p>
+    {% endif %}
+
 {% endblock %}

@@ -38,8 +38,6 @@ class HomeView(View):
 
         return render(request, 'CosmetologyApp/index.html', context)
 
-
-
 class UserProfileView(View):
     @staticmethod
     def get(request):
@@ -53,23 +51,35 @@ class UserProfileView(View):
             request,
             'CosmetologyApp/personal.html',
             context={'doctor' : doctor, })
+#Client#########################
+class ClientDetailsView(View):
+    @staticmethod
+    def get(request, id):
+        try:
+            client = Client.objects.get(id=id)
+        except Client.DoesNotExist:
+            raise Http404("client doesn't exist :(")
+        return render(
+            request,
+            'CosmetologyApp/client_detail.html',
+            context={'client': client, }
+        )
+class ClientCreate(CreateView):
 
+    model = Client
+    fields = ['name', 'number', 'birth_date']
+    success_url = reverse_lazy('client')
 
+class ClientUpdate(UpdateView):
+    model = Client
+    fields = ['name', 'number', 'birth_date']
+    success_url = reverse_lazy('client')
 
-class SheduleCreate(CreateView):
+class ClientDelete(DeleteView):
+    model = Client
+    success_url = reverse_lazy('client')
 
-    model = Shedule
-    fields = ['doctor', 'client', 'service', 'room', 'date']
-    success_url = reverse_lazy('shedule')
-
-
-
-
-class SheduleUpdate(UpdateView):
-    model = Shedule
-    fields = ['doctor', 'client', 'service', 'room', 'date']
-    success_url = reverse_lazy('shedule')
-
+#Shedule#########################
 class SheduleDetailsView(View):
     @staticmethod
     def get(request, id):
@@ -82,6 +92,18 @@ class SheduleDetailsView(View):
             'CosmetologyApp/shedule_detail.html',
             context={'shedule': shedule, }
         )
+
+class SheduleCreate(CreateView):
+
+    model = Shedule
+    fields = ['doctor', 'client', 'service', 'room', 'date']
+    success_url = reverse_lazy('shedule')
+
+class SheduleUpdate(UpdateView):
+    model = Shedule
+    fields = ['doctor', 'client', 'service', 'room', 'date']
+    success_url = reverse_lazy('shedule')
+
 class SheduleDelete(DeleteView):
     model = Shedule
     success_url = reverse_lazy('shedule')
@@ -93,8 +115,28 @@ class DoctortForm(forms.Form):
     number = forms.CharField(max_length=30, validators=[num_validetor], help_text="+375 (29) xxx-xx-xx")
     password = forms.CharField()
 
+class ServiceDetailsView(View):
+    @staticmethod
+    def get(request, id):
+        try:
+            service = Service.objects.get(id=id)
+        except Service.DoesNotExist:
+            raise Http404("Service doesn't exist :(")
+        return render(
+            request,
+            'CosmetologyApp/service_detail.html',
+            context={'service': service, }
+        )
 
+class ServiceCreate(CreateView):
 
+    model = Service
+    fields = ['procedure', 'price']
+    success_url = reverse_lazy('service')
+
+class ServiceDelete(DeleteView):
+    model = Service
+    success_url = reverse_lazy('service')
 def UserRegistration(request):
     if request.method == "POST":
         doctorForm = DoctortForm(request.POST)
@@ -143,21 +185,6 @@ class SheduleListView(generic.ListView):
     model = Shedule
     context_object_name = 'shedule_list'
     template_name = 'CosmetologyApp/shedule.html'
-
-# class ClientDetailView(generic.DetailView):
-#     model = Client
-class ClientDetailView(View):
-    def get(request, id):
-        try:
-            client_details = Client.objects.get(id=id)
-        except Client.DoesNotExist:
-            raise Http404("Placement doesn't exist :(")
-
-        return render(
-            request,
-            'CosmetologyApp/client_detail.html',
-            context={'client_details': client_details, }
-        )
 
 
 class DoctorDetailView(View):

@@ -2,16 +2,23 @@
 
 {% block content %}
 <h1 class="name">Clients</h1>
+
 {% if client_list %}
 <table>
-<tr><th>Name:</th><th>Phone:</th></tr>
+<tr><th>Name:</th><th>Phone:</th>
 
     {% for client in client_list %}
-    <tr><td> {{ client.name }}</td><td>{{ client.number }}</td></tr>
+
+    <tr><td><a href="/CosmetologyApp/client/{{ client.id }}"> {{ client.name }}</a></td><td>{{ client.number }}</td>
+
+    </tr>
     {% endfor %}
 
 </table>
 {% else %}
-    <p>There are no client in the salon</p>
+    <p>There are no shedule in the salon</p>
+{% endif %}
+{% if user.is_superuser %}
+    <p><a href="/CosmetologyApp/client/add/">Add</a></p>
 {% endif %}
 {% endblock %}

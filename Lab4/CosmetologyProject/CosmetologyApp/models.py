@@ -40,33 +40,29 @@ class Doctor(models.Model):
         verbose_name_plural = "Doctors"
 
     def __str__(self) -> str:
-        return "\nName: " + str(self.name) + "\nPhone" + str(self.number)
+        return f'{self.name}'
 class Service(models.Model):
     procedure = models.CharField(max_length=30)
-    price = models.FloatField()
+    price = models.FloatField(validators=[MinValueValidator(1.00), MaxValueValidator(150.00)])
 
     class Meta:
-        ordering = ['procedure', 'price']
         verbose_name = "Service"
         verbose_name_plural = "Services"
 
     def __str__(self):
-        return f'{self.procedure} {self.price}'
+        return f'{self.procedure}'
 class Client(models.Model):
     num_validetor = RegexValidator(regex=r"^+375 \(29\) \d{3}-\d{2}-\d{2}$")
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     name = models.CharField(max_length=20)
-    number = models.CharField(max_length=20, validators=[num_validetor], default='+375 (29) xxx-xx-xx')
-    birth_date = models.DateField(null=True, blank=True)
+    number = models.CharField(max_length=20,  help_text='+375 (29) xxx-xx-xx')
+    birth_date = models.DateField(null=True, blank=False)
 
     class Meta:
-        ordering = ['name', 'number']
         verbose_name = "Client"
         verbose_name_plural = "Clients"
 
     def __str__(self) -> str:
-        return "\nName: " + str(self.name) + "\nPhone" + str(self.number)
+        return f'{self.name}, {self.number}'
 
 class Shedule(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True, blank=True,

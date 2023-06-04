@@ -1,0 +1,13 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block title %}Service Details{% endblock %}
+{% block content %}
+    <ul>
+        <li>Procedure: {{ service.procedure }}</li>
+        <li>Price: {{ service.price }}</li>
+    </ul>
+    {% if user.is_superuser %}
+            <p><a href="/CosmetologyApp/service/{{ service.id }}/delete/">Delete</a></p>
+    {% endif %}
+
+{% endblock %}

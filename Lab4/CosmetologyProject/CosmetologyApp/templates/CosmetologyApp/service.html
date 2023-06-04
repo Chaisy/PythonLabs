@@ -7,11 +7,15 @@
 <tr><th>Service:</th><th>Price:</th></tr> <!--ряд с ячейками заголовков-->
 
     {% for service in service_list %}
-    <tr><td> {{ service.procedure }}</td><td>{{ service.price }}</td></tr>
+    <tr><td> <a href="/CosmetologyApp/service/{{ service.id }}">{{ service.procedure }}</a></td>
+        <td>{{ service.price }}</td></tr>
     {% endfor %}
 
 </table>
 {% else %}
     <p>There are no services in the salon</p>
+{% endif %}
+{% if user.is_superuser %}
+    <p><a href="/CosmetologyApp/service/add/">Add</a></p>
 {% endif %}
 {% endblock %}

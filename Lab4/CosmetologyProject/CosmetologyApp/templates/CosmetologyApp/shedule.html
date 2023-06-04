@@ -10,7 +10,7 @@
     {% for shedule in shedule_list %}
 
     <tr><td><a href="/CosmetologyApp/shedule/{{ shedule.id }}"> {{ shedule.doctor }}</a></td><td>{{ shedule.client }}</td>
-        <td>{{ shedule.service }}</td><td>{{ shedule.service }}</td>
+        <td>{{ shedule.service }}</td><td>{{ shedule.room }}</td>
         <td>{{ shedule.date }}</td>
     </tr>
     {% endfor %}
