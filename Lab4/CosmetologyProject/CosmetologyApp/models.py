@@ -80,7 +80,7 @@ class Shedule(models.Model):
         verbose_name_plural = "Shedules"
 
     def __str__(self) -> str:
-        return f'{self.doctor} {self.client}{self.service} {self.room}{self.date}'
+        return f'{self.service}'
 
 class Sale(models.Model):
     service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True, blank=True, related_name='sale_servise')

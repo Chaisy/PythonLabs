@@ -1,0 +1,14 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+
+{% block title %}Diagram{% endblock %}
+
+{% block content %}
+
+  <h1>Diagram</h1>
+
+  <div class="diagram_service" style="width: 700px;">
+    {{ plot_div|safe }}
+  </div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block title %}Static Info{% endblock %}
+
+{% block content %}
+<h1>Static Info</h1>
+<table>
+<tr><th>Count of clients:</th><th>Count of doctors:</th>
+    <th>Count of services:</th><th>Count of doctor's appointment:
+    </th><th>Latest used procedure:</th></th><th>The most popular service:</th>
+</tr>
+    <tr><td> {{ client_count }}</td><td>{{ doctor_count }}</td>
+        <td>{{ service_count }}</td><td>{{ priems_count}}</td>
+        <td>{{ latest_proc }}</td> <td>{{ pop_service }}</td>
+    </tr>
+
+
+</table>
+
+<!--  -->
+<!--     <ul>-->
+<!--        <li><em>Count of clients: </em>{{ client_count }}</li>-->
+<!--        <li><em>Count of doctors: </em>{{ doctor_count }}</li>-->
+<!--        <li><em>Count of services: </em>{{ service_count }}</li>-->
+<!--        <li><em>Count of doctor's appointment: </em>{{priems_count}}</li>-->
+<!--         <li><em>Latest procedure: </em><a href="/CosmetologyApp/service/{{ service.id }}">{{ latest_proc }}</a></li>-->
+<!--        <li><em>The most popular service: </em>{{ pop_service }}</li>-->
+<!--    </ul>-->
+{% endblock %}

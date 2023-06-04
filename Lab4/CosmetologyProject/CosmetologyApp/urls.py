@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.http import HttpResponseRedirect
 from django.urls import path, include
 from django.urls import re_path
 
@@ -12,7 +13,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     re_path(r'^registration/$', views.UserRegistration, name='registration'),
-
     path('service/', views.ServiceListView.as_view(), name='service'),
     path('service/<int:id>/', views.ServiceDetailsView.as_view(), name='detail_service'),
     path('service/add/', views.ServiceCreate.as_view(), name='add_service'),
@@ -32,8 +32,10 @@ urlpatterns = [
     path('client/<int:pk>/delete/', views.ClientDelete.as_view(), name='delete_client'),
 
     path(r'^doctor$', views.DoctorListView.as_view(), name='doctor'),
-
     path(r'doctor/(?P<pk>\d+)$', views.DoctorDetailView.as_view(), name='doctor-detail'),
+
+    path('diagram/', views.DiagramView.as_view(), name='diagram'),
+    path('static_info/', views.StaticInfoView.as_view(), name='static_info'),
 
 
 
