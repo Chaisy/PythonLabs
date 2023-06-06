@@ -13,7 +13,8 @@ from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from plotly.graph_objects import Bar, Layout, Figure
 from django.shortcuts import render
-from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.http import HttpResponse, Http404, HttpResponseRedirect, \
+    HttpResponseBadRequest
 import datetime
 
 from django.urls import reverse_lazy
@@ -26,6 +27,12 @@ from .models import Service, Client, Doctor, Shedule, Doctor_Category
 logger = logging.getLogger(__name__)
 
 
+def is_superuser(view_func):
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_superuser:
+            return HttpResponseBadRequest()
+        return view_func(request, *args, **kwargs)
+    return wrapper
 class HomeView(View):
     @staticmethod
     def get(request):
@@ -62,9 +69,9 @@ class UserProfileView(View):
 @method_decorator(login_required, name='dispatch')
 class ClientDetailsView(View):
     @staticmethod
-    def get(request, id):
+    def get(request, pk):
         try:
-            client = Client.objects.get(id=id)
+            client = Client.objects.get(id=pk)
         except Client.DoesNotExist:
             raise Http404("client doesn't exist :(")
         return render(
@@ -75,6 +82,7 @@ class ClientDetailsView(View):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(is_superuser, name='dispatch')
 class ClientCreate(CreateView):
     model = Client
     fields = ['name', 'number', 'birth_date']
@@ -114,6 +122,7 @@ class ClientCreate(CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(is_superuser, name='dispatch')
 class ClientUpdate(UpdateView):
     model = Client
     fields = ['name', 'number', 'birth_date']
@@ -153,6 +162,7 @@ class ClientUpdate(UpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(is_superuser, name='dispatch')
 class ClientDelete(DeleteView):
     model = Client
     success_url = reverse_lazy('client')
@@ -175,6 +185,7 @@ class SheduleDetailsView(View):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(is_superuser, name='dispatch')
 class SheduleCreate(CreateView):
     model = Shedule
     fields = ['doctor', 'client', 'service', 'room', 'date']
@@ -216,6 +227,7 @@ class SheduleCreate(CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(is_superuser, name='dispatch')
 class SheduleUpdate(UpdateView):
     model = Shedule
     fields = ['doctor', 'client', 'service', 'room', 'date']
@@ -257,6 +269,7 @@ class SheduleUpdate(UpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(is_superuser, name='dispatch')
 class SheduleDelete(DeleteView):
     model = Shedule
     success_url = reverse_lazy('shedule')
@@ -286,6 +299,7 @@ class ServiceDetailsView(View):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(is_superuser, name='dispatch')
 class ServiceCreate(CreateView):
     model = Service
     fields = ['procedure', 'price']
@@ -314,6 +328,7 @@ class ServiceCreate(CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(is_superuser, name='dispatch')
 class ServiceDelete(DeleteView):
     model = Service
     success_url = reverse_lazy('service')
@@ -392,6 +407,7 @@ class DoctorDetailView(View):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(is_superuser, name='dispatch')
 class DiagramView(View):
     @staticmethod
     def get(request):

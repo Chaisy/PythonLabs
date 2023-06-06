@@ -25,6 +25,7 @@ urlpatterns = [
     # re_path(r'^about$', CosmetologyApp.views.about, name='about'),
     path('admin/', admin.site.urls),
     path('', lambda request: redirect('CosmetologyApp/')),
+    path('accounts/login/', include('CosmetologyApp.urls')),
     path('CosmetologyApp/', include('CosmetologyApp.urls'))
 
 ]

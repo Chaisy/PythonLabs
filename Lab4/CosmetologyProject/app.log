@@ -1,0 +1,8 @@
+05-06-2023 12:06:17 - WARNING - Bad Request: /CosmetologyApp/service/add/
+05-06-2023 12:06:17 - WARNING - Bad Request: /CosmetologyApp/service/1/delete/
+05-06-2023 12:06:17 - WARNING - Bad Request: /CosmetologyApp/shedule/add/
+05-06-2023 12:06:17 - WARNING - Bad Request: /CosmetologyApp/shedule/3/delete/
+05-06-2023 12:06:17 - WARNING - Bad Request: /CosmetologyApp/client/2/delete/
+05-06-2023 12:06:17 - WARNING - Bad Request: /CosmetologyApp/client/2/edit/
+05-06-2023 12:06:17 - WARNING - Bad Request: /CosmetologyApp/shedule/3/edit/
+05-06-2023 12:06:17 - WARNING - Bad Request: /CosmetologyApp/diagram/

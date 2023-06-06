@@ -43,7 +43,7 @@ class Doctor(models.Model):
         return f'{self.name}'
 class Service(models.Model):
     procedure = models.CharField(max_length=30)
-    price = models.FloatField(validators=[MinValueValidator(1.00), MaxValueValidator(150.00)])
+    price = models.FloatField(validators=[MinValueValidator(1.00), MaxValueValidator(150.00)], default='0.00')
 
     class Meta:
         verbose_name = "Service"

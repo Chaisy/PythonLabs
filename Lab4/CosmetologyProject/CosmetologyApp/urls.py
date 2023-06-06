@@ -12,6 +12,7 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('/accounts/login/CosmetologyApp/accounts/', include('django.contrib.auth.urls')),
     re_path(r'^registration/$', views.UserRegistration, name='registration'),
     path('service/', views.ServiceListView.as_view(), name='service'),
     path('service/<int:id>/', views.ServiceDetailsView.as_view(), name='detail_service'),
@@ -26,13 +27,13 @@ urlpatterns = [
 
 
     path('client/', views.ClientListView.as_view(), name='client'),
-    path('client/<int:id>/', views.ClientDetailsView.as_view(), name='cl'),
+    path('client/<int:pk>/', views.ClientDetailsView.as_view(), name='detail_client'),
     path('client/add/', views.ClientCreate.as_view(), name='add_client'),
     path('client/<int:pk>/edit/', views.ClientUpdate.as_view(), name='edit_client'),
     path('client/<int:pk>/delete/', views.ClientDelete.as_view(), name='delete_client'),
 
-    path(r'^doctor$', views.DoctorListView.as_view(), name='doctor'),
-    path(r'doctor/(?P<pk>\d+)$', views.DoctorDetailView.as_view(), name='doctor-detail'),
+    # path(r'^doctor$', views.DoctorListView.as_view(), name='doctor'),
+    # path(r'doctor/(?P<pk>\d+)$', views.DoctorDetailView.as_view(), name='doctor-detail'),
 
     path('diagram/', views.DiagramView.as_view(), name='diagram'),
     path('static_info/', views.StaticInfoView.as_view(), name='static_info'),
