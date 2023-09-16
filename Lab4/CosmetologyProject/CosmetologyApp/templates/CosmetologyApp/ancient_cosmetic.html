@@ -1,0 +1,34 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block title %}Company Info{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'site.css' %}" xmlns="http://www.w3.org/1999/html">
+
+<h1 style="text-align:center">Ancient cosmetics</h1>
+<p style="text-align:center"><a style=" text-decoration:none; color:#8374d3" href="#down">Down</a></p>
+<article style="width:1000px; margin:auto">
+<p>The 20th Century witnessed revolutionary advancements in the cosmetics industry driven
+    by scientific discoveries, changing societal norms & evolving beauty ideals. From the introduction
+    of groundbreaking products like lipsticks, mascara & foundations to the iconic figure who shaped the industry,
+    i.e, Est’ee Lauder & Helena Rubinstein, cosmetics became more accessible, innovative & deeply intertwined with popular culture.</p>
+    <img style="width:800px" src="http://newsimg.bbc.co.uk/media/images/41826000/jpg/_41826548_romancosmetics203.jpg" alt="one">
+    <blockquote cite="https://medium.com/@saikiajoydeep15/lets-delve-into-the-history-of-cosmetics-its-origins-in-ancient-times-surprising-growth-in-8eb60faeec75">
+        The history of cosmetics is a testament to our inherent desire for self enhancement & creativity,
+        from ancient rituals to modern day beauty routines, cosmetics have played an integral role in shaping
+        our perceptions of beauty, identity & culture. As we continue to witness the evolution of the cosmetic
+        industry, it is essential to understand its historical roots, celebrating both the artistry & science
+        behind the products we use today.</blockquote>
+    <p>The hostory of cosmetics stretches back to thousands of years, with evidence
+        of cosmetics use dating as far back as ancient Egypt, Mesopotamia, China & India.
+        They used a wide variety of natural ingredients, i.e, crushed minerals, plant exctracts &
+        even insects to create cosmetics for both practical & aesthetic purposes. Usage of cosmetics
+        were more than a personal adornment, they had a deep cultural, religious significance, symbolising
+        wealth, status & spirituality.</p>
+    <img style="width:800px" src="https://avatars.dzeninfra.ru/get-zen_doc/8080662/pub_63ef5f2078b2e67b3877551a_63ef5f8f29138056e7a15c54/scale_1200" alt="two">
+    <form class="buttn"  action="/CosmetologyApp/news/" >
+   <button style="width:200px; background-color: #9887ed; color:white; height:50px" id="down">Back</button>
+  </form>
+</article>
+{% endblock %}

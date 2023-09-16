@@ -1,0 +1,58 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block title %}Company Info{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'site.css' %}" xmlns="http://www.w3.org/1999/html">
+
+<section style="width:1000px; margin:auto">
+    <article style="margin:20px">
+        <details>
+            <summary style="background-color: #9887ed; color:white; ">What procedures are available in cosmetology to improve the skin?</summary>
+            Cosmetology offers various procedures such as chemical peels, laser therapy, Botox injections, fillers,
+            microdermabrasion, and more to improve skin texture and tone.
+            <small><time datetime="2023-07-07">July 7,2023</time></small>
+        </details>
+    </article>
+    <article style="margin:20px">
+        <details>
+            <summary style="background-color: #9887ed; color:white; ">What procedures can help with wrinkles?</summary>
+            Procedures such as Botox injections, fillers, chemical peels, and laser therapy can help reduce wrinkles
+            and give the skin a more youthful appearance.
+            <small><time datetime="2023-08-07">August 7,2023</time></small>
+        </details>
+    </article>
+    <article style="margin:20px">
+        <details>
+            <summary style="background-color: #9887ed; color:white; ">How should I prepare for cosmetology procedures?</summary>
+            Consult with your cosmetologist about necessary preparation steps before a procedure, such as avoiding sun exposure or specific skincare products.
+            <small><time datetime="2023-05-15">May 15,2023</time></small>
+        </details>
+    </article>
+    <article style="margin:20px">
+        <details >
+            <summary style="background-color: #9887ed; color:white;">How long is the recovery time after procedures?</summary>
+            Recovery time varies depending on the type of procedure. For example, some chemical peels may require a
+            few days of recovery, while Botox injections typically have no downtime.
+            <small><time datetime="2022-11-03">November 3,2022</time></small>
+        </details>
+    </article>
+    <article style="margin:20px">
+        <details >
+            <summary style="background-color: #9887ed; color:white; ">What skincare products should I use?</summary>
+            Skincare recommendations can vary based on your skin type. Cosmetologists can provide individualized
+            skincare advice.
+            <small><time datetime="2023-02-17">February 17</time></small>
+        </details>
+    </article>
+    <article style="margin:20px">
+        <details>
+            <summary style="background-color: #9887ed; color:white">How long do the effects of cosmetology procedures last?</summary>
+             The duration of the effects of procedures can vary. For instance, Botox injections may last several
+            months, while the results of chemical peels can be long-term.
+            <small><time datetime="2023-04-07">April 7</time></small>
+        </details>
+    </article>
+</section>
+{% endblock %}

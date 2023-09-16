@@ -1,0 +1,43 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block title %}News{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'site.css' %}" xmlns="http://www.w3.org/1999/html">
+
+<h1 style="text-align:center" id="Influence_of_technology">Influence of technology</h1>
+<p style="text-align:center"><a style=" text-decoration:none; color:#8374d3" href="#down">Down</a></p>
+<nav style="margin-left: 0px;
+                padding-left: 0px;
+                list-style: none;">
+    <a href="#Influence_of_technology"style="text-decoration:none; color:#8374d3">Influence of technology</a><br>
+    <a href="#connection" style=" text-decoration:none; color:#8374d3">Connection Between Beauty And Technology</a>
+</nav>
+<article style="width:1000px; margin:auto">
+<p>We are living in an era of technology. Technology makes humans' life facile. Day by day we can see new
+    inventions and innovations in every field due to technology.
+    Practically every industry has been significantly impacted by technology. The beauty industry has seen a
+    technological shift over the past 10 years that has increased the effectiveness of business management,
+    communication, and marketing tasks. Following the increased adoption of technology across a wide range of corporate
+    operations, the sector is currently moving in the direction of higher revenues.</p>
+    <img style="width:800px" src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*G0cAh_IWKSeE0dp4v41qdA.jpeg" alt="one">
+    <h2 id="connection">Connection Between Beauty And Technology</h2>
+    <p>So what is the relationship between technology and beauty? Technology has been used in the beauty and cosmetic
+        sector as a result of consumer dissatisfaction with conventional beauty products and the need for innovative
+        alternatives. The way we view beauty and wellness therapies today is changing as a result of the growing usage
+        of devices and tools in daily skincare regimens because they not only work well but also produce results quickly.</p>
+    <p>The development of the beauty business to where it is today has been greatly aided by technology. With the
+        release of apps like Techkon's Catch Your Beauty Tone and L'Oréal's Makeup Genius, customers may now engage with
+        cosmetics and skin care items online. The former uses facial mapping technologies to transform a smartphone into
+        a virtual mirror that lets users test out different makeup looks while also having share features connected to
+        various social networks. Several people complain that finding the proper coloration of foundation for her pores
+        and skin is an enormous mission that regularly requires trial and mistake. Businesses try a unique technique to
+        this hassle with AI replacing traditional retail interactions.
+</p>
+    <img style="width:800px" src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*XdDRv_rUc5KRWB6CifzfSw.jpeg" alt="two">
+    <form class="buttn"  action="/CosmetologyApp/news/" >
+   <button style="width:200px; background-color: #9887ed; color:white; height:50px" id="down">Back</button>
+  </form>
+</article>
+{% endblock %}

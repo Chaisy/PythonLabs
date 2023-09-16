@@ -1,0 +1,41 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block title %}Company Info{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'site.css' %}" xmlns="http://www.w3.org/1999/html">
+
+<h1 style="text-align:center">Injectable procedures</h1>
+<p style="text-align:center"><a style=" text-decoration:none; color:#8374d3" href="#down">Down</a></p>
+<article style="width:1000px; margin:auto">
+<p>Injectables and Botox are widely used in the field of cosmetology to address various
+    aesthetic concerns and promote a more youthful appearance. Let’s take a closer look at each of them:
+    Injectables: Injectables refer to a broad category of cosmetic treatments that involve the
+    injection of substances into the skin to improve its appearance. There are two primary types of
+    injectables: dermal fillers and neuromodulators.</p>
+    <img style="width:800px" src="https://avatars.mds.yandex.net/i?id=93536c79d2a2b71938b2154665dcd2e9d8d0f15a-4579614-images-thumbs&n=13" alt="one">
+    <ul>
+        <li>Dermal fillers: These are substances injected into the skin to add volume, fill in wrinkles, and enhance
+            facial contours. They are commonly used to address signs of aging, such as fine lines, wrinkles, and loss
+            of facial volume. Dermal fillers are made from different materials, including hyaluronic acid, calcium
+            hydroxylapatite, and poly-L-lactic acid. The effects of dermal fillers can last anywhere from several
+            months to over a year, depending on the type used.</li>
+        <li>Neuromodulators: Neuromodulators, such as Botox, Dysport, and Xeomin, are substances injected into specific
+            facial muscles to temporarily block nerve signals, thereby relaxing the muscles and reducing the appearance
+            of wrinkles and fine lines. Botox, in particular, is widely recognized and used for this purpose. The
+            effects of neuromodulators typically last around three to six months.</li>
+    </ul>
+    <p>Botox: Botox is the brand name for a type of botulinum toxin produced by the bacterium Clostridium botulinum.
+        It has medical and cosmetic applications, but in cosmetology, it is primarily used for facial rejuvenation.
+        It’s crucial to remember that injectables and Botox are medical procedures and should only be administered by
+        qualified and trained medical professionals, such as dermatologists or plastic surgeons. Improper administration
+        can lead to adverse effects and complications. Patients should have a consultation with a qualified practitioner
+        to discuss their goals and determine the most suitable treatment plan for their specific needs.
+</p>
+    <img style="width:800px" src="https://avatars.mds.yandex.net/i?id=e5ade261ea797edd82eba8776228e8b2132468b3-9211239-images-thumbs&n=13" alt="two">
+    <form class="buttn"  action="/CosmetologyApp/news/" >
+   <button accesskey="L" style="width:200px; background-color: #9887ed; color:white; height:50px" id="down">Back</button>
+  </form>
+</article>
+{% endblock %}

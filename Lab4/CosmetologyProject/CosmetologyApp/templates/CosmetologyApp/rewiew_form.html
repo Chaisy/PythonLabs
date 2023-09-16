@@ -1,0 +1,19 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block content %}
+<form  method="post" novalidate>
+    {% csrf_token%}
+    <h3>Your rewiew</h3>
+    <div style="margin:auto">
+        <label for="{{form.reviewer.auto_id}}">Enter your name:</label>
+        <input id="{{form.reviewer.auto_id}}" type="text" name="{{form.reviewer.name}}" required>
+        <label for="{{form.rate.auto_id}}">Enter rate:</label>
+        <input id="{{form.rate.auto_id}}" type="number" min="1" max="10" name="{{form.rate.name}}" required>
+        <label for="{{form.text.auto_id}}">Enter review:</label>
+        <textarea id="{{form.text.auto_id}}" name="{{form.text.name}}" cols="180" rows="25" required>
+
+        </textarea>
+    </div>
+    <input type="submit" value="Create review" />
+</form>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block title %}Promocode Details{% endblock %}
+{% block content %}
+
+    <article style="width: 200px; margin:auto; text-align:center">
+        <h3 style="margin:10px; color:#9887ed"> {{promocode.code}}</h3>
+        <p>Start Date: {{promocode.start_date}}</p>
+        <p style="margin:10px">End Date: {{promocode.expiration_date}}</p>
+
+    </article>
+    {% if user.is_superuser %}
+            <p><a  href="/CosmetologyApp/vacancy/{{ vacancy.id }}/delete/">Delete</a></p>
+    {% endif %}
+
+{% endblock %}

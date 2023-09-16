@@ -1,0 +1,16 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block title %}Vacancy Details{% endblock %}
+{% block content %}
+
+    <article style="width: 200px; margin:auto; text-align:center">
+        <h3 style="margin:10px; color:#9887ed">Job character: {{vacancy.job_character}}</h3>
+        <p>Experience: {{vacancy.experience}} year(s)</p>
+        <p style="margin:10px">Description: {{vacancy.description}}</p>
+        <p>Salary: {{vacancy.salary}} BYN</p>
+    </article>
+    {% if user.is_superuser %}
+            <p><a  href="/CosmetologyApp/vacancy/{{ vacancy.id }}/delete/">Delete</a></p>
+    {% endif %}
+
+{% endblock %}

@@ -2,10 +2,13 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta name="author" content="tg:@your_Dar" />
+    <meta name="description"
+          content="Cosmetology Salon Project" />
     <title>{{ title }}</title>
     <title>Cosmetology</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'site.css' %}" />
+    <link rel="stylesheet" href="{% static 'site.css' %}" />
             <script>
         function updateDateTime()
         {
@@ -18,12 +21,22 @@
     </script>
 </head>
 <body>
-    <div class="navbar">
-
-        <a href="/" class="navbar-brand">Cosmetology Salon</a>
+    <nav class="navbar">
+        <a href="/CosmetologyApp/"><img style=" height:40px" src="https://i.pinimg.com/564x/80/e8/d4/80e8d462d6bcf6f409f6a115dec15092.jpg"
+                                      alt="logo"></a>
+        <a href="/" class="navbar-brand">In Shine</a>
         <a href="/CosmetologyApp/" class="navbar-item">Home</a>
         <a href="/CosmetologyApp/service" class="navbar-item">Service</a>
         <a href="/CosmetologyApp/static_info/" class="navbar-item">Static Info</a>
+        <a href="/CosmetologyApp/about_company/" class="navbar-item">About Company</a>
+        <a href="/CosmetologyApp/news/" class="navbar-item">News</a>
+        <a href="/CosmetologyApp/faq/" class="navbar-item">FaQ</a>
+        <a href="/CosmetologyApp/vacancy" class="navbar-item">Vacancy</a>
+        <a href="/CosmetologyApp/promocode" class="navbar-item">Promocode</a>
+
+        <a href="/CosmetologyApp/rewiew" class="navbar-item">Review</a>
+
+
 
         {% if user.is_authenticated %}
         {% if user.is_superuser %}
@@ -32,6 +45,7 @@
         <h class="navbar-item" ><font color="black">User: {{ user.get_username }}</font></h>
 <!--        <h class="navbar-item">Phone: {{ doctor.get_number }}</h>-->
         <a href="/CosmetologyApp/shedule" class="navbar-item">Shedule</a>
+        <a href="/CosmetologyApp/doctor" class="navbar-item">Doctors</a>
         <a href="/CosmetologyApp/client" class="navbar-item">Clients</a>
         <a href="/CosmetologyApp/accounts/logout/" class="navbar-item">Logout</a>
 
@@ -40,12 +54,15 @@
 
         {% endif %}
 
-    </div>
+    </nav>
+
     <div class="body-content">
         {% block content %}{% endblock %}
         <hr />
         <footer>
             <p>&copy; 2023</p>
+<!-- !!!!!!!!!!!!! -->
+            <a href="/CosmetologyApp/private_policy/" itemprop="hasMerchantReturnPolicy" download="/CosmetologyProject/CosmetologyApp/static/files/privacy_policy.txt">Our privacy policy</a>
             {{ content }}
         </footer>
     </div>

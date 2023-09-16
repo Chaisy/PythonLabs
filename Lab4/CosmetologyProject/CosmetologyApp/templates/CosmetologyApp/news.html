@@ -1,0 +1,57 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block title %}Company Info{% endblock %}
+
+{% block content %}
+{% load static %}
+    <link rel="stylesheet" href="{% static 'site.css' %}">
+
+<section>
+    <article style="width:500px">
+        <h3>Ancient cosmetics</h3>
+        <img style="width:450px" src="https://avatars.mds.yandex.net/i?id=ac9143a2e4249181e0327354bfc74b5dfc63d6ea-9843573-images-thumbs&n=13"
+             alt="ancient cosmetic">
+        <details>
+            <summary>History of ancient cosmetics:</summary>
+            The use of cosmetics dates back to ancient civilizations such 
+            as Egypt and Mesopotamia, where oils, powders, and paints 
+            were used for adornment and skincare.
+            <a href="/CosmetologyApp/ancient_cosmetic/">Read more...</a>
+        </details>
+    </article>
+
+    <article style="width:500px">
+        <h3>Injectable procedures</h3>
+        <img style="width:450px" src="https://irp-cdn.multiscreensite.com/33cb545f/dms3rep/multi/desktop/service2.jpg" alt="injectable procedures">
+        <details>
+            <summary>Development of injectable procedures:</summary>
+            Cosmetic injections of substances like Botox and fillers
+            have become popular methods for rejuvenation and enhancing appearance.
+            <a href="/CosmetologyApp/injectable_procedures/">Read more...</a>
+        </details>
+    </article>
+
+    <article style="width:500px">
+        <h3>Influence of technology:</h3>
+        <img style="width:450px" src="https://static.tildacdn.com/tild6634-3162-4265-b833-393535643137/D6lTHALWwAAVwYB__.jpg" alt="Influence of technology">
+        <details>
+            <summary>Influence of technology:</summary>
+             Modern technologies like lasers and ultrasound allow
+            for more effective and less invasive cosmetic procedures.
+            <a href="/CosmetologyApp/Influence_of_technology/">Read more...</a>
+        </details>
+    </article>
+
+    <article style="width:500px">
+        <h3>Men's grooming: </h3>
+        <img style="width:450px" src="https://avatars.mds.yandex.net/i?id=1a8020449ff1719141f95342ed433a4fb48bf662-9068343-images-thumbs&n=13" alt="Mens grooming">
+        <details>
+            <summary>Men's grooming: </summary>
+            More men are turning to cosmetologists' services and using skincare products as part of their self-care routine.
+            <a href="/CosmetologyApp/Mens_grooming/">Read more...</a>
+        </details>
+    </article>
+
+</section>
+
+{% endblock %}

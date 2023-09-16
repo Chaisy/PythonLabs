@@ -1,12 +1,52 @@
 {% extends "CosmetologyApp/layout.html" %}
 {% block content %}
-<h1>Welcome to Cosmetology Salon</h1>
+
+<section>
+    <h1>Welcome to Cosmetology Salon</h1>
 <h3 ><em>Time: </em></h3>
 <p  id="current-datetime"></p>
+</section>
 
-
-
-<h2>Pretty Dog</h2>
-<img src="{{ image_url }}" alt="Such image doesn't exist :(" style="max-width: 500px;">
+<section>
+    <h2>Pretty Dog</h2>
+    <img src="{{ image_url }}" alt="Such image doesn't exist :(" style="max-width: 500px;">
 <p><em>Random activity: </em>{{ activity }}</p>
+</section>
+<section style="text-align: center; margin: 10px;">
+    <a style="text-align:center;" href="https://cosmetologytelaviv.com/en">
+    <img src="https://avatars.mds.yandex.net/i?id=21eee7d481865bcf8809e6054eb4969a64a7257d-8803246-images-thumbs&n=13" alt="reklama">
+    </a>
+</section>
+
+<section>
+    <h2 style=" text-align: center;">NEW</h2>
+    <div class="new_procedure" style="border: 4px solid #8374d3; padding:5px; margin:auto; text-align:center; width:500px;">
+    <p>New service in our list!!!</p>
+    <p>{{latest_add_serv}}</p>
+    <a href="/CosmetologyApp/about_company/">Contact us to use this procedure!!!</a>
+    </div>
+</section>
+<section>
+    <h2 style=" text-align: center;">Our Partners</h2>
+    <div style="text-align: center; padding:5px;display:grid; grid-template-columns: repeat(4, 1fr); border: 4px solid #8374d3; margin:auto; width:800px">
+        <div>
+            <img style="width:200px; height:100px" src="https://sun6-20.userapi.com/s/v1/ig2/wOs4gpvaY92GEMiijS2zLasYzwOlQbpXECZnuN6t0NWNzDnUjuDVWWBf7m69HYj41AlnjfqrwqDWMcXw2VQ1c86N.jpg?size=2048x2048&quality=95&crop=0,0,2048,2048&ava=1" alt="partner">
+            <a href="https://cosmetologytelaviv.com/en/school?ysclid=lmd9zsizqc464382984"><p>Tl Aviv Salon</p></a>
+        </div>
+
+        <div><img style="width:200px; height:100px" src="https://sun6-20.userapi.com/s/v1/ig2/wOs4gpvaY92GEMiijS2zLasYzwOlQbpXECZnuN6t0NWNzDnUjuDVWWBf7m69HYj41AlnjfqrwqDWMcXw2VQ1c86N.jpg?size=2048x2048&quality=95&crop=0,0,2048,2048&ava=1" alt="partner">
+            <a href="https://cosmetologytelaviv.com/en/school?ysclid=lmd9zsizqc464382984"><p>Tl Aviv Salon</p></a>
+        </div>
+
+        <div><img style="width:200px; height:100px" src="https://sun6-20.userapi.com/s/v1/ig2/wOs4gpvaY92GEMiijS2zLasYzwOlQbpXECZnuN6t0NWNzDnUjuDVWWBf7m69HYj41AlnjfqrwqDWMcXw2VQ1c86N.jpg?size=2048x2048&quality=95&crop=0,0,2048,2048&ava=1" alt="partner">
+            <a href="https://cosmetologytelaviv.com/en/school?ysclid=lmd9zsizqc464382984"><p>Tl Aviv Salon</p></a>
+        </div>
+
+        <div><img style="width:200px; height:100px" src="https://sun6-20.userapi.com/s/v1/ig2/wOs4gpvaY92GEMiijS2zLasYzwOlQbpXECZnuN6t0NWNzDnUjuDVWWBf7m69HYj41AlnjfqrwqDWMcXw2VQ1c86N.jpg?size=2048x2048&quality=95&crop=0,0,2048,2048&ava=1" alt="partner">
+            <a href="https://cosmetologytelaviv.com/en/school?ysclid=lmd9zsizqc464382984"><p>Tl Aviv Salon</p></a>
+        </div>
+    </div>
+</section>
+<code>print("Hello world")</code>
+
 {% endblock %}

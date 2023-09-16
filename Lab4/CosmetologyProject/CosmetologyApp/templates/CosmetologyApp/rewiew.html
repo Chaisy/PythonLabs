@@ -1,0 +1,26 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block content %}
+<h1 class="name">Rewiew</h1>
+<section>
+    {% if rewiew_list %}
+    {% for rewiew in rewiew_list %}
+    <article style="width: 200px; text-align:center">
+        <ul>
+            <li>Nickname: {{rewiew.reviewer}}</li>
+            <li>Rate: {{rewiew.rate}}</li>
+            <li>Text: {{rewiew.text}}</li>
+            <li>Date: {{rewiew.creation_date}}</li>
+        </ul>
+    </article>
+    {% endfor %}
+    {% else %}
+    <p>There are no reviews in the salon</p>
+    {% endif %}
+
+    <p><a href="/CosmetologyApp/rewiew/add/">Add</a></p>
+
+</section>
+{% endblock %}
+
+

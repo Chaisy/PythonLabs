@@ -1,0 +1,43 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block content %}
+<h1 class="name">Promocodes</h1>
+
+
+<section>
+    {% if promocode_list %}
+
+            <h1>Valid Promocodes</h1>
+                {% for promocode in promocode_list %}
+                    {% if promocode.expiration_date >= current_date %}
+                    <article style="width: 200px; text-align:center">
+                        <h3 style="margin:10px; color:#9887ed"><a style="text-decoration:none" href="/CosmetologyApp/promocode/{{ promocode.id }}">{{promocode.code}}</a></h3>
+                        <p>Start Date: {{promocode.start_date}}</p>
+                        <p style="margin:10px">End Date: {{promocode.expiration_date}}</p>
+                    </article>
+                     {% endif %}
+                {% endfor %}
+
+            <h1>Invalid Promocodes</h1>
+            {% for promocode in promocode_list %}
+                {% if promocode.expiration_date < current_date %}
+                    <article style="width: 200px; text-align:center">
+                        <h3 style="margin:10px; color:#9887ed"><a style="text-decoration:none" href="/CosmetologyApp/promocode/{{ promocode.id }}">{{promocode.code}}</a></h3>
+                        <p>Start Date: {{promocode.start_date}}</p>
+                        <p style="margin:10px">End Date: {{promocode.expiration_date}}</p>
+                    </article>
+                {% endif %}
+            {% endfor %}
+
+    {% else %}
+        <p>There are no promocodes in the salon</p>
+    {% endif %}
+
+    {% if user.is_superuser %}
+    <p><a href="/CosmetologyApp/promocode/add/">Add</a></p>
+    {% endif %}
+
+</section>
+{% endblock %}
+
+

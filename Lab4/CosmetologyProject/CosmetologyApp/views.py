@@ -9,7 +9,8 @@ from django.core.validators import RegexValidator
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
-from django.shortcuts import render
+from django.db import transaction
+from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from plotly.graph_objects import Bar, Layout, Figure
 from django.shortcuts import render
@@ -22,7 +23,7 @@ from django.views import generic, View
 import requests
 from django.views.generic import CreateView, UpdateView, DeleteView
 
-from .models import Service, Client, Doctor, Shedule, Doctor_Category
+from .models import Service, Client, Doctor, Shedule, Doctor_Category, Vacancy, Promocode, Rewiew
 
 logger = logging.getLogger(__name__)
 
@@ -41,10 +42,12 @@ class HomeView(View):
 
         response = requests.get('https://www.boredapi.com/api/activity')
         act = response.json()['activity']
+        last_add_service=Service.objects.latest('procedure')
 
         context = {
             'image_url': image_url,
-            'activity': act
+            'activity': act,
+            'latest_add_serv': last_add_service,
         }
 
         return render(request, 'CosmetologyApp/index.html', context)
@@ -201,15 +204,15 @@ class SheduleCreate(CreateView):
             logger.error(f'Failed to create shedule by {self.request.user.username}!')
             return self.form_invalid(form)
 
-        if form.cleaned_data['doctor'] == None or form.cleaned_data['client'] == None or \
-                form.cleaned_data['service'] == None:
+        if form.cleaned_data['doctor'] is None or form.cleaned_data['client'] is None or \
+                form.cleaned_data['service'] is None:
             form.add_error(None, 'Shedule have empty field.')
             logger.error(f'Failed to create shedule by {self.request.user.username}!')
             return self.form_invalid(form)
 
         date1 = form.cleaned_data['date']
         dateTimeNow = datetime.date.today()
-        dateInFuture = datetime.date(2023, 8, 30)
+        dateInFuture = datetime.date(2023, 12, 30)
 
         if ((dateTimeNow > date1) or (date1 > dateInFuture)):
             form.add_error(None, 'Date in past or the date is too far away.')
@@ -251,7 +254,7 @@ class SheduleUpdate(UpdateView):
 
         date1 = form.cleaned_data['date']
         dateTimeNow = datetime.date.today()
-        dateInFuture = datetime.date(2023, 8, 30)
+        dateInFuture = datetime.date(2023, 12, 30)
 
         if ((dateTimeNow > date1) or (date1 > dateInFuture)):
             form.add_error(None, 'Date in past or the date is too far away.')
@@ -282,6 +285,7 @@ class DoctortForm(forms.Form):
     name = forms.CharField(max_length=20, validators=[name_validator])
     number = forms.CharField(max_length=30, validators=[num_validetor], help_text="+375 (29) xxx-xx-xx")
     password = forms.CharField(min_length=2, widget=forms.PasswordInput())
+    photo_link = forms.CharField(min_length=2)
 
 
 class ServiceDetailsView(View):
@@ -333,6 +337,35 @@ class ServiceDelete(DeleteView):
     model = Service
     success_url = reverse_lazy('service')
 
+class RewiewForm(forms.Form):
+    name_validator = RegexValidator(regex=r"^[A-z '-]+$")
+    reviewer = forms.CharField(max_length=20, validators=[name_validator])
+    rate = forms.CharField(max_length=2, help_text="rate from 1 to 10")
+    text = forms.CharField(help_text="your review")
+
+def RewiewCreate(request):
+    if request.method == "GET":
+        form = RewiewForm()
+        return render(request, "CosmetologyApp/rewiew_form.html", {'form':form})
+    if request.method == "POST":
+        form = RewiewForm(request.POST)
+        if form.is_valid():
+            with transaction.atomic():
+                reviewer = form.cleaned_data['reviewer']
+                rate = form.cleaned_data['rate']
+                text = form.cleaned_data['text']
+                creation_date = datetime.date.today()
+
+                Rewiew.objects.create(
+                    reviewer=reviewer,
+                    rate=rate,
+                    text=text,
+                    creation_date=creation_date
+                )
+
+                return HttpResponseRedirect('/CosmetologyApp/rewiew/')
+        else:
+            return render(request, "CosmetologyApp/rewiew_form.html", {'form': form})
 
 def UserRegistration(request):
     if request.method == "POST":
@@ -350,6 +383,7 @@ def UserRegistration(request):
                 doctor = Doctor()
                 doctor.name = user.username
                 doctor.number = doctorForm.cleaned_data['number']
+                doctor.photo = doctorForm.cleaned_data['photo_link']
                 doctor.save()
                 logger.info(f'Registration new user {doctor.id}: {doctor.name}')
                 return HttpResponseRedirect('/CosmetologyApp/accounts/login/')
@@ -368,6 +402,7 @@ class ServiceListView(generic.ListView):
     model = Service
     context_object_name = 'service_list'
     template_name = 'CosmetologyApp/service.html'
+
 
 
 @method_decorator(login_required, name='dispatch')
@@ -438,7 +473,141 @@ class DiagramView(View):
             context={'plot_div': plot_div, }
         )
 
+class AboutCompanyInfoView(View):
+    @staticmethod
+    def get(request):
+        context = {}
+        return render(
+            request,
+            'CosmetologyApp/about_company.html',
+            context
+        )
+class News(View):
+    @staticmethod
+    def get(request):
+        context = {}
+        return render(
+            request,
+            'CosmetologyApp/news.html',
+            context
+        )
+class ancient_cosmetic(View):
+    @staticmethod
+    def get(request):
+        context = {}
+        return render(
+            request,
+            'CosmetologyApp/ancient_cosmetic.html',
+            context
+        )
+class injectable_procedures(View):
+    @staticmethod
+    def get(request):
+        context = {}
+        return render(
+            request,
+            'CosmetologyApp/injectable_procedures.html',
+            context
+        )
 
+class Influence_of_technology(View):
+    @staticmethod
+    def get(request):
+        context = {}
+        return render(
+            request,
+            'CosmetologyApp/Influence_of_technology.html',
+            context
+        )
+class Mens_grooming(View):
+    @staticmethod
+    def get(request):
+        context = {}
+        return render(
+            request,
+            'CosmetologyApp/Mens_grooming.html',
+            context
+        )
+class faq(View):
+    @staticmethod
+    def get(request):
+        context = {}
+        return render(
+            request,
+            'CosmetologyApp/faq.html',
+            context
+        )
+
+class rewiew(generic.ListView):
+    model = Rewiew
+    context_object_name = 'rewiew_list'
+    template_name = 'CosmetologyApp/rewiew.html'
+
+
+
+
+class private_policy(View):
+    @staticmethod
+    def get(request):
+        context = {}
+        return render(
+            request,
+            'CosmetologyApp/private_policy.html',
+            context
+        )
+class vacancy_View(generic.ListView):
+    model = Vacancy
+    context_object_name = 'vacancy_list'
+    template_name = 'CosmetologyApp/vacancy.html'
+
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(is_superuser, name='dispatch')
+class VacancyCreate(CreateView):
+    model = Vacancy
+    fields = ['job_character', 'experience', 'description', 'salary']
+    success_url = reverse_lazy('vacancy')
+
+    def form_valid(self, form):
+        # form.instance.staffer = Staffer.objects.filter(username=self.request.user.username).first()
+        if Vacancy.objects.filter(job_character=form.cleaned_data['job_character']):
+            form.add_error(None, 'We have this job_character.')
+            logger.error(f'Failed to create vacancy by {self.request.user.username}!')
+            return self.form_invalid(form)
+
+        if not re.fullmatch(r"^[A-z ,'-]+$", form.cleaned_data['job_character']):
+            form.add_error(None, 'Its not job_character.')
+            logger.error(f'Failed to create vacancy by {self.request.user.username}!')
+            return self.form_invalid(form)
+
+        try:
+            response = super().form_valid(form)
+
+            logger.info(f'Vacancy was created successfully by {self.request.user.username}.')
+            return response
+        except Exception:
+            logger.error(f'Vacancy to create client by {self.request.user.username}!')
+            raise
+
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(is_superuser, name='dispatch')
+class VacancyDelete(DeleteView):
+    model = Vacancy
+    success_url = reverse_lazy('vacancy')
+
+class VacancyDetailsView(View):
+    @staticmethod
+    def get(request, id):
+        try:
+            vacancy = Vacancy.objects.get(id=id)
+        except Vacancy.DoesNotExist:
+            raise Http404("Vacancy doesn't exist :(")
+        return render(
+            request,
+            'CosmetologyApp/vacancy_detail.html',
+            context={'vacancy': vacancy, }
+        )
 class StaticInfoView(View):
     @staticmethod
     def get(request):
@@ -481,3 +650,75 @@ def formatted_datetime():
     current_datetime = datetime.now()
     result = current_datetime.strftime("%d-%m-%Y %H:%M:%S")
     return str(result)
+
+class PromocodeView(generic.ListView):
+    model = Promocode
+    context_object_name = 'promocode_list'
+    template_name = 'CosmetologyApp/promocode.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_date'] = datetime.date.today()
+
+        return context
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(is_superuser, name='dispatch')
+class PromocodeCreate(CreateView):
+    model = Promocode
+    fields = ['code', 'start_date', 'expiration_date', 'sale']
+    success_url = reverse_lazy('promocode')
+
+    def form_valid(self, form):
+        # form.instance.staffer = Staffer.objects.filter(username=self.request.user.username).first()
+        if Promocode.objects.filter(code=form.cleaned_data['code']) and \
+                Shedule.objects.filter(start_date=form.cleaned_data['start_date']) and \
+                Shedule.objects.filter(expiration_date=form.cleaned_data['expiration_date']):
+            form.add_error(None, 'We have this promocode.')
+            logger.error(f'Failed to create promocode by {self.request.user.username}!')
+            return self.form_invalid(form)
+
+        if form.cleaned_data['code'] is None or form.cleaned_data['expiration_date'] is None or \
+                form.cleaned_data['start_date'] is None:
+            form.add_error(None, 'Promocode have empty field.')
+            logger.error(f'Failed to create promocode by {self.request.user.username}!')
+            return self.form_invalid(form)
+
+        date_start = form.cleaned_data['start_date']
+        date_end = form.cleaned_data['expiration_date']
+        dateInPast = datetime.date(2000, 8, 30)
+        dateInFuture = datetime.date(2024, 8, 30)
+
+        if (date_start > dateInFuture or (date_end<date_start) or(date_start<dateInPast)):
+            form.add_error(None, 'Check dates')
+            logger.error(f'Failed to create promocode by {self.request.user.username}!')
+            return self.form_invalid(form)
+
+        try:
+            response = super().form_valid(form)
+
+            logger.info(f'Promocode was created successfully by {self.request.user.username}.')
+            return response
+        except Exception:
+            logger.error(f'Promocode to create client by {self.request.user.username}!')
+            raise
+
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(is_superuser, name='dispatch')
+class PromocodeDelete(DeleteView):
+    model = Promocode
+    success_url = reverse_lazy('promocode')
+
+class PromocodeDetailsView(View):
+    @staticmethod
+    def get(request, id):
+        try:
+            promocode = Promocode.objects.get(id=id)
+        except Promocode.DoesNotExist:
+            raise Http404("Promocode doesn't exist :(")
+        return render(
+            request,
+            'CosmetologyApp/promocode_detail.html',
+            context={'promocode': promocode, }
+        )

@@ -7,7 +7,7 @@
 <tr><th>Name:</th><th>Phone:</th></tr> <!--ряд с ячейками заголовков-->
 
     {% for doctor in doctor_list %}
-    <tr><td> {{ doctor.name }}</td><td>{{ doctor.number }}</td></tr>
+    <tr><td> {{ doctor.name }} <br><img style="height:100px" src={{doctor.photo}} alt="photo"></td><td>{{ doctor.number }}</td></tr>
     {% endfor %}
 
 </table>

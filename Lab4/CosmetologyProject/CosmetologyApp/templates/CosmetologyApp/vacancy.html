@@ -1,0 +1,26 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block content %}
+<h1 class="name">Vacancy</h1>
+<section>
+    {% if vacancy_list %}
+    {% for vacancy in vacancy_list %}
+    <article style="width: 200px; text-align:center">
+        <h3 style="margin:10px; color:#9887ed"><a style="text-decoration:none" href="/CosmetologyApp/vacancy/{{ vacancy.id }}">{{vacancy.job_character}}</a></h3>
+        <p>Experience: {{vacancy.experience}} year(s)</p>
+        <p style="margin:10px">Description: {{vacancy.description}}</p>
+        <p>Salary: {{vacancy.salary}} BYN</p>
+    </article>
+    {% endfor %}
+    {% else %}
+    <p>There are no vacancy in the salon</p>
+    {% endif %}
+
+    {% if user.is_superuser %}
+    <p><a href="/CosmetologyApp/vacancy/add/">Add</a></p>
+    {% endif %}
+
+</section>
+{% endblock %}
+
+

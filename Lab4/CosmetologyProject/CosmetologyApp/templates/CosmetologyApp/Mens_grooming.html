@@ -1,0 +1,62 @@
+{% extends "CosmetologyApp/layout.html" %}
+
+{% block title %}Company Info{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'site.css' %}" xmlns="http://www.w3.org/1999/html">
+
+<h1 style="text-align:center">Men's grooming</h1>
+<p style="text-align:center"><a style=" text-decoration:none; color:#8374d3" href="#down">Down</a></p>
+<nav style="margin-left: 0px;
+                padding-left: 0px;
+                list-style: none;">
+    <a href="#grooming"style="text-decoration:none; color:#8374d3">Why is grooming important for men?</a><br>
+    <a href="#connection" style=" text-decoration:none; color:#8374d3">Connection Between Beauty And Technology</a>
+</nav>
+<article style="width:1000px; margin:auto">
+<p>Men’s grooming has become an increasingly important aspect of personal care, with a growing focus on looking and
+    feeling your best. From basic hygiene practices to advanced grooming techniques, there are many ways to take your
+    grooming game to the next level. In this guide, we will explore the importance of grooming, provide tips and tricks,
+    and help you get started with a comprehensive grooming routine.
+    <h2 id="grooming">Why is grooming important for men?</h2>
+    Grooming is not just about looking good, but it’s also about maintaining good health and hygiene. Good grooming
+    practices can help to prevent the spread of germs and keep you healthy, while also improving your physical
+    appearance. A well-groomed appearance can also boost your confidence and self-esteem, helping you to feel more
+    confident and comfortable in social situations.
+    The basics of men’s grooming.
+    When it comes to grooming, there are several essential steps that every man should follow. These include:</p>
+    <ol>
+        <li>Showering and bathing regularly: A daily shower is essential for keeping your skin and hair clean, while
+            also helping to prevent the spread of germs. It is also important to use a gentle, nourishing soap and
+            shampoo that is appropriate for your skin and hair type.</li>
+        <li>Brushing your teeth: Brushing your teeth twice a day and flossing regularly is important for maintaining
+            good oral hygiene and preventing the buildup of plaque and tartar. It is also important to use a toothbrush
+            with soft bristles and a fluoride toothpaste to keep your teeth and gums healthy.</li>
+        <li>Shaving: If you have facial hair, regular shaving is an important part of your grooming routine. A good
+            shaving cream or gel can help to provide a smooth and comfortable shave, while also reducing the risk of
+            razor burn and ingrown hairs.</li>
+        <li>Skin care: Proper skin care is essential for maintaining healthy, radiant skin. This includes using a gentle
+            face wash or cleanser to remove dirt and oil, as well as a moisturizer to keep your skin hydrated and
+            protected. Sunscreen is also important for preventing sun damage, especially if you.</li>
+    </ol>
+    <img style="width:800px" src="https://avatars.mds.yandex.net/i?id=cf09258f8de33f77333fe0636746ac245701efdc-7998362-images-thumbs&n=13" alt="one">
+    <h2 id="connection">Connection Between Beauty And Technology</h2>
+    <p>So what is the relationship between technology and beauty? Technology has been used in the beauty and cosmetic
+        sector as a result of consumer dissatisfaction with conventional beauty products and the need for innovative
+        alternatives. The way we view beauty and wellness therapies today is changing as a result of the growing usage
+        of devices and tools in daily skincare regimens because they not only work well but also produce results quickly.</p>
+    <p>The development of the beauty business to where it is today has been greatly aided by technology. With the
+        release of apps like Techkon's Catch Your Beauty Tone and L'Oréal's Makeup Genius, customers may now engage with
+        cosmetics and skin care items online. The former uses facial mapping technologies to transform a smartphone into
+        a virtual mirror that lets users test out different makeup looks while also having share features connected to
+        various social networks. Several people complain that finding the proper coloration of foundation for her pores
+        and skin is an enormous mission that regularly requires trial and mistake. Businesses try a unique technique to
+        this hassle with AI replacing traditional retail interactions.
+</p>
+    <img style="width:800px" src="https://static.tildacdn.com/tild3663-6632-4364-b664-306264343235/lifestyle1.jpg" alt="two">
+    <form class="buttn"  action="/CosmetologyApp/news/" >
+   <button style="width:200px; background-color: #9887ed; color:white; height:50px" id="down">Back</button>
+  </form>
+</article>
+{% endblock %}

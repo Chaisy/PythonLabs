@@ -5,13 +5,20 @@
 {% block content %}
 <h1>Static Info</h1>
 <table>
-<tr><th>Count of clients:</th><th>Count of doctors:</th>
-    <th>Count of services:</th><th>Count of doctor's appointment:
-    </th><th>Latest used procedure:</th></th><th>The most popular service:</th>
+<tr>
+    <th colspan="2">Counts of:</th>
+    <th rowspan="2" id="service">Count of services:</th><th rowspan="2" id="appoint">Count of doctor's appointment:
+    </th><th rowspan="2" id="proc">Latest used procedure:</th></th><th rowspan="2" id="popS">The most popular service:</th>
 </tr>
-    <tr><td> {{ client_count }}</td><td>{{ doctor_count }}</td>
-        <td>{{ service_count }}</td><td>{{ priems_count}}</td>
-        <td>{{ latest_proc }}</td> <td>{{ pop_service }}</td>
+
+<tr>
+    <th id="clients">Count of clients:</th><th id="doc">Count of doctors:</th>
+</tr>
+
+</tr>
+    <tr><td headers="clients"> {{ client_count }}</td><td headers="doc">{{ doctor_count }}</td>
+        <td headers="service">{{ service_count }}</td><td headers="appoint">{{ priems_count}}</td>
+        <td headers="proc">{{ latest_proc }}</td> <td headers="popS">{{ pop_service }}</td>
     </tr>
 
 
